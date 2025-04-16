@@ -1,0 +1,71 @@
+# ------------------------
+# Ignorer les fichiers Node.js
+# ------------------------
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+dist/
+build/
+
+# ------------------------
+# Ignorer les fichiers PHP / Composer
+# ------------------------
+vendor/
+composer.lock
+
+# ------------------------
+# Ignorer les environnements
+# ------------------------
+.env
+.env.local
+.env.*.local
+
+# ------------------------
+# Logs et caches
+# ------------------------
+logs/
+*.log
+*.cache
+*.tmp
+
+# ------------------------
+# macOS
+# ------------------------
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# ------------------------
+# VS Code
+# ------------------------
+.vscode/
+
+# ------------------------
+# IDE divers
+# ------------------------
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# ------------------------
+# Fichiers temporaires Unix
+# ------------------------
+*.swp
+*~
+*#
+
+# ------------------------
+# LAMP (phpMyAdmin / Apache / MariaDB)
+# ------------------------
+*.sql
+*.sql.gz
+phpMyAdmin/
+dev_error.log
+dev_access.log
+
+# ------------------------
+# Mongo Express / PM2
+# ------------------------
+mongo-express-config-ok.env
+.pm2/

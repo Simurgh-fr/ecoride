@@ -1,2 +1,28 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# Traiter les fichiers de script comme texte avec fins de ligne LF
+*.sh text eol=lf
+*.js text eol=lf
+*.ts text eol=lf
+*.php text eol=lf
+*.html text eol=lf
+*.css text eol=lf
+*.md text eol=lf
+*.yml text eol=lf
+*.json text eol=lf
+
+# Binaires - ne pas les normaliser
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
+*.zip binary
+
+# Linguistique GitHub (highlighting & stats)
+*.js linguist-language=JavaScript
+*.ts linguist-language=TypeScript
+*.php linguist-language=PHP
+*.yml linguist-language=YAML
