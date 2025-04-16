@@ -198,7 +198,7 @@ server {
 
 1. **Cloner le dépôt**
    ```bash
-   git clone https://github.com/<ton-utilisateur>/ecoride.git
+   git clone https://github.com/Simurgh-fr/ecoride.git
    cd ecoride
    ```
 
