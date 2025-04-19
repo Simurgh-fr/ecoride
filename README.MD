@@ -1,6 +1,6 @@
 # 🌿 EcoRide
 
-EcoRide est une application web de covoiturage écologique développée dans le cadre d’un projet de fin d’étude. Ce projet fullstack vise à mettre en œuvre une application complète, de la maquette au déploiement, en validant des compétences en front-end, back-end, base de données, gestion de projet, sécurité et déploiement.
+EcoRide est une application web de covoiturage écologique développée dans le cadre d’un projet d'évaluation en cours de formation. Ce projet fullstack vise à mettre en œuvre une application complète, de la maquette au déploiement, en validant des compétences en front-end, back-end, base de données, gestion de projet, sécurité et déploiement.
 
 ## 📑 Table des matières
 
@@ -243,11 +243,11 @@ server {
 
 ## 📁 Livrables attendus
 
-- Lien GitHub public avec structure propre
+- Lien GitHub public avec structure propre : https://github.com/Simurgh-fr/ecoride
 - Application déployée (Heroku ou local)
 - Script SQL de création + données
 - Manuel utilisateur PDF
 - Charte graphique PDF
-- Maquettes (3 desktop + 3 mobile)
+- Maquettes (3 desktop + 3 mobile) : https://www.figma.com/design/2SDtNrWyZWaNvcy8jQDEqw/Ecoride?node-id=0-1&t=Q8w9yJy17FgxAFdG-1
 - Documentations technique & projet
-- Kanban (Trello, Notion, etc.)
+- Kanban : Trello : https://trello.com/b/XPbiYwfv/ecoride
