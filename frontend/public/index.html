@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EcoRide - Covoiturage écologique</title>
+  <link rel="stylesheet" href="../src/css/style.css">
+  <link rel="stylesheet" href="../src/css/header.css">
+  <link rel="stylesheet" href="../src/css/footer.css">
+</head>
+<body>
+
+  <!-- Header injecté dynamiquement -->
+
+  <main>
+    <section id="hero" class="fade-in-section">
+      <div class="hero-content">
+        <h1>Bienvenue sur <span>EcoRide,</span></h1>
+        <p>partagez vos trajets, réduisez vos émissions</p>
+      </div>
+      <div class="image-wrapper">
+        <img src="../src/assets/images/Photo de averie woodard sur Unsplash.jpg" alt="Illustration écologique">
+        <small class="photo-credit">Photo de averie woodard sur Unsplash</small>
+      </div>
+    </section>
+
+    <section id="recherche" class="fade-in-section">
+      <h2>Recherchez votre itinéraire</h2>
+      <form id="search-form">
+        <input type="text" placeholder="Ville de départ" name="depart" required>
+        <input type="text" placeholder="Ville d'arrivée" name="arrivee" required>
+        <input type="date" name="date" required>
+        <button type="submit">Rechercher</button>
+      </form>
+    </section>
+  </main>
+
+  <!-- Footer injecté dynamiquement -->
+
+  <script type="module" src="../src/js/script.js"></script>
+</body>
+</html>

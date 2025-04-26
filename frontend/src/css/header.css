@@ -1,0 +1,111 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  height: 80px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo img {
+  height: 100%;
+}
+
+.logo span {
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: #212121;
+}
+
+.desktop-menu {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.desktop-menu a {
+  text-decoration: none;
+  color: #212121;
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+.mobile-menu-icon {
+  display: none;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  background-color: #ffffff;
+}
+
+.mobile-menu {
+  display: none;
+  opacity: 0;
+  background-color: rgba(255, 255, 255, 0.95);
+  transition: opacity 0.4s ease;
+}
+
+.mobile-menu.active {
+  display: flex;
+  flex-direction: column;
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .desktop-menu {
+    display: none;
+  }
+  .mobile-menu-icon {
+    display: block;
+  }
+}
+
+.desktop-menu .btn-login {
+  background-color: #4CAF50;
+  color: white;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.desktop-menu .btn-login:hover {
+  background-color: #388E3C;
+}
+
+.mobile-menu .btn-login {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  margin: 10px auto;
+  width: 80%;
+  text-align: center;
+}
+
+.mobile-menu .btn-login:hover {
+  background-color: #388E3C;
+}
+.menu-toggle {
+  display: inline-block;
+  transition: transform 0.4s ease;
+}
+
+.menu-toggle.open {
+  transform: rotate(90deg);
+}

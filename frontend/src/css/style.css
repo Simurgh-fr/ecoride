@@ -1,0 +1,109 @@
+/* Base générale */
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+}
+
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Section Hero */
+#hero {
+  padding: 60px 20px 20px;
+  text-align: center;
+}
+
+.hero-content h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.hero-content h1 span {
+  color: #4CAF50;
+}
+
+.hero-content p {
+  font-size: 1.25rem;
+  margin-bottom: 30px;
+}
+
+/* Illustration */
+.image-wrapper {
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.image-wrapper img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.photo-credit {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  font-size: 0.7rem;
+  color: #555;
+  max-width: 90%;
+  text-align: right;
+}
+
+/* Section Recherche */
+#recherche {
+  background-color: #f0fdf4;
+  border-radius: 10px;
+  padding: 40px 20px;
+  margin: 40px auto;
+  max-width: 800px;
+  text-align: center;
+}
+
+#recherche h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+#search-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+#search-form input,
+#search-form button {
+  padding: 12px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+#search-form button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+#search-form button:hover {
+  background-color: #388E3C;
+}
+
+/* Animation fade-in (quand tu voudras l'activer via JS plus tard) */
+.fade-in-section {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.fade-in-section.visible {
+  opacity: 1;
+  transform: none;
+}
