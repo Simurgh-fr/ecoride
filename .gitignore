@@ -1,0 +1,36 @@
+# --- macOS (fichiers parasites Finder) ---
+.DS_Store
+._*
+
+# --- Node.js / Mongo Express ---
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.env
+.env.*
+
+# --- PHP / Apache / phpMyAdmin / MariaDB ---
+vendor/
+*.log
+*.sql
+*.sqlite
+*.env
+*.php~
+
+# --- Dossiers générés / cache éventuels ---
+build/
+dist/
+.cache/
+tmp/
+temp/
+
+# --- VS Code uniquement ---
+.vscode/
+
+# --- Fichiers de sauvegarde ou temporaires ---
+*.bak
+*.tmp
+*.swp
+*.swo
+*.swn

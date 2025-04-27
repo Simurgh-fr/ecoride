@@ -52,15 +52,32 @@ header {
 
 .mobile-menu {
   display: none;
+  flex-direction: column;
+  align-items: center;
+  background-color: #ffffff;
+  border-top: 1px solid #e0e0e0;
+  gap: 10px;
+  padding: 20px 0;
   opacity: 0;
-  background-color: rgba(255, 255, 255, 0.95);
-  transition: opacity 0.4s ease;
+  transform: translateY(-20px); /* glisse plus haut au départ */
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out; /* transition plus douce */
 }
 
 .mobile-menu.active {
   display: flex;
-  flex-direction: column;
   opacity: 1;
+  transform: translateY(0);
+}
+
+.mobile-menu a {
+  text-decoration: none;
+  color: #4CAF50;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.mobile-menu a:hover {
+  color: #388E3C;
 }
 
 @media (max-width: 768px) {
