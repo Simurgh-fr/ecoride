@@ -42,6 +42,13 @@ footer {
   font-size: 1rem;
 }
 
+/* Active link style for desktop footer */
+.footer-links a.active {
+  color: #4CAF50;
+  border-bottom: 2px solid #4CAF50;
+  font-weight: bold;
+}
+
 .footer-copy {
   font-size: 0.875rem;
   color: #555555;
@@ -80,12 +87,46 @@ footer {
     margin-bottom: 10px;
   }
 
+  /* 
+    Les liens du footer mobile sont en inline-block avec une largeur ajustée au texte.
+    Cela permet de centrer précisément le soulignement sous chaque lien.
+  */
   .footer-links-mobile a {
+    display: inline-block;
+    position: relative;
+    width: fit-content;
+    margin: 0 auto;
     text-decoration: none;
-    color: #4CAF50;
+    color: #212121;
     font-size: 1rem;
   }
 
+  .footer-links-mobile a:hover {
+    color: #4CAF50;
+  }
+
+  .footer-links-mobile a.active {
+    color: #4CAF50;
+    font-weight: bold;
+  }
+
+  /* 
+    Pseudo-élément ::after utilisé pour créer un soulignement personnalisé.
+    Il est centré sous le lien actif grâce à left: 0; right: 0; margin: auto;
+    et limité à la largeur du texte grâce à width: auto.
+  */
+  .footer-links-mobile a.active::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -2px;
+    height: 2px;
+    width: auto;
+    background-color: #4CAF50;
+    margin: 0 auto;
+  }
+  
   .footer-copy {
     font-size: 0.75rem;
     color: #555555;

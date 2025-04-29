@@ -7,20 +7,20 @@ export function createHeader() {
         <span>EcoRide</span>
       </div>
       <nav class="desktop-menu">
-        <a href="#">Accueil</a>
-        <a href="#">Trajets</a>
-        <a href="#">Mon profil</a>
-        <button class="btn-login">Connexion</button>
+       <a href="index.html">Accueil</a>
+       <a href="trajets.html">Trajets</a>
+       <a href="profil.html">Mon profil</a>
+       <button class="btn-login" onclick="window.location.href='connexion.html'">Connexion</button>
       </nav>
       <div class="mobile-menu-icon">
         <span class="menu-toggle">&#9776;</span>
       </div>
     </div>
     <div class="mobile-menu">
-      <a href="#">Accueil</a>
-      <a href="#">Trajets</a>
-      <a href="#">Mon profil</a>
-      <button class="btn-login">Connexion</button>
+      <a href="index.html">Accueil</a>
+      <a href="trajets.html">Trajets</a>
+      <a href="profil.html">Mon profil</a>
+      <button class="btn-login" onclick="window.location.href='connexion.html'">Connexion</button>
     </div>
   `;
 
@@ -38,6 +38,14 @@ export function createHeader() {
   window.addEventListener('resize', () => {
     if (window.innerWidth > 768) {
       mobileMenu.classList.remove('active');
+    }
+  });
+
+  // Ajouter la classe active au lien correspondant à la page actuelle
+  const currentPage = window.location.pathname.split('/').pop();
+  header.querySelectorAll('nav a, .mobile-menu a').forEach(link => {
+    if (link.getAttribute('href') === currentPage) {
+      link.classList.add('active');
     }
   });
 }

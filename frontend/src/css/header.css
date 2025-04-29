@@ -71,13 +71,24 @@ header {
 
 .mobile-menu a {
   text-decoration: none;
-  color: #4CAF50;
+  color: #212121;
   font-size: 1rem;
   text-align: center;
 }
 
 .mobile-menu a:hover {
-  color: #388E3C;
+  color: #4CAF50;
+}
+
+.mobile-menu a.active {
+  color: #4CAF50;
+  border-bottom: 2px solid #4CAF50;
+  font-weight: bold;
+}
+.desktop-menu a.active {
+  color: #4CAF50;
+  border-bottom: 2px solid #4CAF50;
+  font-weight: bold;
 }
 
 @media (max-width: 768px) {
