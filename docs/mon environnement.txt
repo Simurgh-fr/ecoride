@@ -1,0 +1,18 @@
+Mon Mac
+│
+├── VS Code
+│    ├── Extension Live Server (sert juste HTML/CSS/JS localement)
+│    └── Edition de mon code (frontend ET backend)
+│
+├── Montage du serveur (~/dev/Studi/ECF/ecoride)
+│
+├── Navigateur Web
+│    ├── http://127.0.0.1:5500/ (Live Server = juste HTML/JS)
+│    └── http://dev.local/ (via Apache = PHP + base de données MariaDB)
+│
+└── Connexion réseau
+     └── Vers mon serveur Ubuntu
+         ├── Apache2 (sert les fichiers PHP)
+         ├── PHP 8.3 (interprète trajets.php)
+         ├── MariaDB (gère la base ecoride)
+         └── phpMyAdmin (interface pour MariaDB)

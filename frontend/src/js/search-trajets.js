@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const dateTrajet = document.getElementById('date-trajet').value;
   
       try {
-        const response = await fetch(`/backend/api/trajets.php?ville_depart=${villeDepart}&ville_arrivee=${villeArrivee}&date_trajet=${dateTrajet}`);
+        const response = await fetch(`http://dev.local/ecoride-backend/api/trajets.php?lieu_depart=${villeDepart}&lieu_arrivee=${villeArrivee}&date_trajet=${dateTrajet}`);
         const trajets = await response.json();
         afficherTrajets(trajets);
       } catch (err) {
@@ -38,12 +38,10 @@ document.addEventListener('DOMContentLoaded', function () {
         const trajetDiv = document.createElement('div');
         trajetDiv.className = 'card-trajet';
         trajetDiv.innerHTML = `
-          <h3>${trajet.nom_chauffeur} - ${trajet.prix}€</h3>
-          <p>Note : ${trajet.note}/5</p>
-          <p>${trajet.ville_depart} ➔ ${trajet.ville_arrivee}</p>
-          <p>${formaterDate(trajet.date_depart, trajet.heure_depart)}</p>
-          <p>${trajet.places_restantes} places restantes</p>
-          ${trajet.ecologique ? '<p>🚗 Voyage écologique</p>' : ''}
+          <h3>${trajet.lieu_depart} ➔ ${trajet.lieu_arrivee}</h3>
+          <p><strong>Date :</strong> ${trajet.date_depart}</p>
+          <p><strong>Prix :</strong> ${trajet.prix} €</p>
+          <p><strong>Places restantes :</strong> ${trajet.nb_places_disponibles}</p>
           <button class="btn-detail-trajet">Voir détails</button>
         `;
         conteneur.appendChild(trajetDiv);
