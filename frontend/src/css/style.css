@@ -160,3 +160,45 @@ main {
 .btn-cta:hover {
   background-color: #388E3C;
 }
+
+/* === Composants Trajets === */
+.btn-detail-trajet {
+  background-color: #2E8B57;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.btn-detail-trajet:hover {
+  background-color: #246B46;
+}
+
+.card-trajet {
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 16px 24px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease;
+}
+
+.card-trajet:hover {
+  transform: translateY(-3px);
+}
+
+.card-trajet h3 {
+  margin-top: 0;
+  font-size: 1.25rem;
+  color: #2E8B57;
+}
+
+.card-trajet p {
+  margin: 6px 0;
+  font-size: 1rem;
+  color: #333;
+}

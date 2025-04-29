@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nom de la page</title>
+  <title>Trajets</title>
   <link rel="stylesheet" href="../src/css/style.css" />
   <link rel="stylesheet" href="../src/css/header.css" />
   <link rel="stylesheet" href="../src/css/footer.css" />
@@ -18,7 +18,17 @@
 
   <main>
     <h1>Trajets</h1>
-    <p>Contenu à venir...</p>
+
+    <form id="search-form">
+      <input type="text" id="ville-depart" name="ville_depart" placeholder="Ville de départ" required />
+      <input type="text" id="ville-arrivee" name="ville_arrivee" placeholder="Ville d’arrivée" required />
+      <input type="date" id="date-trajet" name="date_trajet" required />
+      <button type="submit">Rechercher</button>
+    </form>
+    
+    <div id="resultats-trajets"></div>
   </main>
+
+  <script type="module" src="../src/js/search-trajets.js"></script>
 </body>
 </html>
