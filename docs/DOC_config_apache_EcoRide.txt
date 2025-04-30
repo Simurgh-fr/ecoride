@@ -1,0 +1,67 @@
+
+# 🌐 Configuration Apache pour le projet EcoRide (US3)
+
+Cette configuration permet de servir proprement le frontend, le backend et les fichiers sources (`src/`) via Apache2 en local sur le domaine `http://dev.local`.
+
+---
+
+## 📁 Structure des dossiers
+
+- `/srv/dev/Studi/ECF/ecoride/`
+    - `frontend/public/` → fichiers HTML (accès public via `/ecoride/`)
+    - `frontend/src/` → JS/CSS/Modules (accès via `/src/`)
+    - `backend/` → API PHP (accès via `/ecoride-backend/`)
+
+---
+
+## 🔧 Liens symboliques créés (dans /var/www/html)
+
+```bash
+sudo ln -s /srv/dev/Studi/ECF/ecoride/frontend/public /var/www/html/ecoride
+sudo ln -s /srv/dev/Studi/ECF/ecoride/frontend/src /var/www/html/src
+sudo ln -s /srv/dev/Studi/ECF/ecoride/backend /var/www/html/ecoride-backend
+```
+
+---
+
+## 🛠️ Fichier Apache : `/etc/apache2/sites-available/dev.local.conf`
+
+```apache
+<VirtualHost *:8080>
+    ServerName dev.local
+    DocumentRoot /var/www/html
+
+    <Directory /var/www/html>
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require all granted
+    </Directory>
+
+    <FilesMatch \.php$>
+        SetHandler application/x-httpd-php
+    </FilesMatch>
+
+    Alias /src/ /srv/dev/Studi/ECF/ecoride/frontend/src/
+
+    <Directory /srv/dev/Studi/ECF/ecoride/frontend/src/>
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require all granted
+    </Directory>
+
+    ErrorLog ${APACHE_LOG_DIR}/dev_error.log
+    CustomLog ${APACHE_LOG_DIR}/dev_access.log combined
+</VirtualHost>
+```
+
+---
+
+## ✅ Vérifications utiles
+
+- `sudo apachectl configtest` → doit retourner `Syntax OK`
+- `sudo systemctl restart apache2` → redémarrage après chaque modif
+- Accès :
+  - `http://dev.local/ecoride/trajets.html`
+  - `http://dev.local/src/js/search-trajets.js`
+  - `http://dev.local/ecoride-backend/api/trajets.php?...`
+

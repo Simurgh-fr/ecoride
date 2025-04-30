@@ -202,3 +202,11 @@ main {
   font-size: 1rem;
   color: #333;
 }
+
+#resultats-trajets {
+  padding: 20px;
+  background-color: #fefefe;
+  border: 2px dashed #4CAF50;
+  border-radius: 10px;
+  margin-top: 40px;
+}

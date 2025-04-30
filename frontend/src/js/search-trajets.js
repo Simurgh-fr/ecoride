@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
   
     form.addEventListener('submit', async function (event) {
       event.preventDefault();
+      console.log("Formulaire déclenché");
   
       const villeDepart = document.getElementById('ville-depart').value;
       const villeArrivee = document.getElementById('ville-arrivee').value;
@@ -11,7 +12,9 @@ document.addEventListener('DOMContentLoaded', function () {
       try {
         const response = await fetch(`http://dev.local/ecoride-backend/api/trajets.php?lieu_depart=${villeDepart}&lieu_arrivee=${villeArrivee}&date_trajet=${dateTrajet}`);
         const trajets = await response.json();
+        console.log("Trajets reçus :", trajets);
         afficherTrajets(trajets);
+        console.log("HTML généré :", document.getElementById('resultats-trajets').innerHTML);
       } catch (err) {
         console.error("Erreur lors de la récupération des trajets :", err);
       }
