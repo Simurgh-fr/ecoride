@@ -210,3 +210,32 @@ main {
   border-radius: 10px;
   margin-top: 40px;
 }
+
+.eco-label {
+  color: #2e7d32;
+  font-weight: bold;
+  font-style: italic;
+  margin-top: 6px;
+  background-color: #e8f5e9;
+  padding: 4px 8px;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+.photo-chauffeur {
+  width: 64px;
+  height: 64px;
+  max-width: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 12px;
+  border: 2px solid #4CAF50;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Met en valeur les mots "Départ" et "Arrivée" dans la ligne date/heure des cartes trajets */
+.card-trajet p strong {
+  color: #2E8B57;
+}
