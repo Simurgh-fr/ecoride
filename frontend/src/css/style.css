@@ -294,3 +294,14 @@ main {
   background-color: #ffebee !important;
   color: #c62828 !important;
 }
+
+.message-suggestion {
+  background-color: #fff3cd;
+  border: 1px solid #ffeeba;
+  color: #856404;
+  padding: 12px 16px;
+  border-radius: 6px;
+  font-size: 1rem;
+  margin-bottom: 16px;
+  text-align: center;
+}

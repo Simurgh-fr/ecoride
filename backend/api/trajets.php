@@ -1,7 +1,7 @@
 <?php
 header('Content-Type: application/json');
 
-if (!isset($_GET['lieu_depart'], $_GET['lieu_arrivee'], $_GET['date_trajet'])) {
+if (!isset($_GET['lieu_depart'], $_GET['lieu_arrivee'])) {
     echo json_encode([]);
     exit;
 }
@@ -24,12 +24,17 @@ $animaux = isset($_GET['animaux']) ? $_GET['animaux'] : null;
 $conditions = [];
 $params = [
     ':lieu_depart' => $lieu_depart,
-    ':lieu_arrivee' => $lieu_arrivee,
-    ':date_trajet' => $date_trajet
+    ':lieu_arrivee' => $lieu_arrivee
 ];
-$conditions[] = 'c.lieu_depart = :lieu_depart';
-$conditions[] = 'c.lieu_arrivee = :lieu_arrivee';
-$conditions[] = '(:date_trajet IS NULL OR :date_trajet = \'\' OR c.date_depart = :date_trajet)';
+if ($date_trajet !== null && $date_trajet !== '') {
+    $conditions[] = 'c.lieu_depart = :lieu_depart';
+    $conditions[] = 'c.lieu_arrivee = :lieu_arrivee';
+    $conditions[] = '(c.date_depart = :date_trajet)';
+    $params[':date_trajet'] = $date_trajet;
+} else {
+    $conditions[] = 'c.lieu_depart = :lieu_depart';
+    $conditions[] = 'c.lieu_arrivee = :lieu_arrivee';
+}
 $conditions[] = 'c.nb_places > 0';
 
 if ($ecologique !== null && $ecologique !== '') {
@@ -69,6 +74,7 @@ $sql = "
         c.lieu_depart,
         c.lieu_arrivee,
         c.date_depart,
+        c.heure_depart,
         c.date_arrivee,
         c.heure_arrivee,
         c.prix_personne AS prix,
@@ -77,7 +83,7 @@ $sql = "
         u.photo AS photo_chauffeur,
         $note_chauffeur_sql AS note_chauffeur,
         v.energie AS type_voiture,
-        CASE WHEN v.energie = 'électrique' THEN 1 ELSE 0 END AS est_ecologique,
+        CASE WHEN LOWER(v.energie) = 'électrique' THEN 1 ELSE 0 END AS est_ecologique,
         c.fumeur,
         c.animaux,
         $duree_sql AS duree
@@ -93,7 +99,64 @@ try {
     $stmt = $pdo->prepare($sql);
     $stmt->execute($params);
     $trajets = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    echo json_encode($trajets);
+    $results_directs = $trajets;
+
+    if (empty($trajets)) {
+        $conditions_sans_date = [
+            'c.lieu_depart = :lieu_depart',
+            'c.lieu_arrivee = :lieu_arrivee',
+            'c.nb_places > 0'
+        ];
+        $params_sans_date = [
+            ':lieu_depart' => $lieu_depart,
+            ':lieu_arrivee' => $lieu_arrivee
+        ];
+
+        $where_sans_date = implode(' AND ', $conditions_sans_date);
+
+        $sql_prochains = "
+            SELECT 
+                c.lieu_depart,
+                c.lieu_arrivee,
+                c.date_depart,
+                c.heure_depart,
+                c.date_arrivee,
+                c.heure_arrivee,
+                c.prix_personne AS prix,
+                c.nb_places AS nb_places_disponibles,
+                u.nom AS pseudo_chauffeur,
+                u.photo AS photo_chauffeur,
+                $note_chauffeur_sql AS note_chauffeur,
+                v.energie AS type_voiture,
+                CASE WHEN LOWER(v.energie) = 'électrique' THEN 1 ELSE 0 END AS est_ecologique,
+                c.fumeur,
+                c.animaux,
+                $duree_sql AS duree
+            FROM covoiturage c
+            INNER JOIN utilise uvc ON c.covoiturage_id = uvc.covoiturage_id
+            INNER JOIN voiture v ON uvc.voiture_id = v.voiture_id
+            INNER JOIN gere g ON v.voiture_id = g.voiture_id
+            INNER JOIN utilisateur u ON g.utilisateur_id = u.utilisateur_id
+            WHERE $where_sans_date
+            ORDER BY CONCAT(c.date_depart, ' ', c.heure_depart) ASC
+        ";
+
+        $stmt = $pdo->prepare($sql_prochains);
+        $stmt->execute($params_sans_date);
+        $trajets = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    if (empty($results_directs) || empty($trajets)) {
+        echo json_encode([
+            'suggestions' => true,
+            'trajets' => $trajets
+        ]);
+    } else {
+        echo json_encode([
+            'suggestions' => false,
+            'trajets' => $results_directs
+        ]);
+    }
 } catch (PDOException $e) {
     echo json_encode(['error' => $e->getMessage()]);
 }

@@ -27,7 +27,10 @@ window.addEventListener('DOMContentLoaded', () => {
     const filtreAnimaux = filtreAnimauxBtn?.classList.contains('tag-ok');
 
     try {
-      let url = `http://dev.local/ecoride-backend/api/trajets.php?lieu_depart=${villeDepart}&lieu_arrivee=${villeArrivee}&date_trajet=${dateTrajet}`;
+      let url = `http://dev.local/ecoride-backend/api/trajets.php?lieu_depart=${villeDepart}&lieu_arrivee=${villeArrivee}`;
+      if (dateTrajet) {
+        url += `&date_trajet=${dateTrajet}`;
+      }
       if (filtreEcologique) url += `&ecologique=1`;
       if (filtrePrixMax) url += `&prix_max=${encodeURIComponent(filtrePrixMax)}`;
       if (filtreDureeMax) url += `&duree_max=${encodeURIComponent(filtreDureeMax)}`;
@@ -35,7 +38,11 @@ window.addEventListener('DOMContentLoaded', () => {
       if (filtreFumeur) url += `&fumeur=1`;
       if (filtreAnimaux) url += `&animaux=1`;
       const response = await fetch(url);
-      const trajets = await response.json();
+      const data = await response.json();
+      console.log("Trajets reçus :", data.trajets);
+      console.log("Premier trajet :", data.trajets[0]);
+      const trajets = data.trajets ?? [];
+      const suggestions = data.suggestions ?? false;
       console.log("Trajets reçus :", trajets);
 
       if (!Array.isArray(trajets)) {
@@ -44,7 +51,13 @@ window.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      afficherTrajets(trajets);
+      let html = '';
+      if (suggestions) {
+        html += '<div class="message-suggestion"><p>Pas de trajet à la date ou au critères demandés.<br><strong>Suggestion d\'autres trajets :</strong></p></div>';
+      }
+      document.getElementById('resultats-trajets').innerHTML = html;
+
+      afficherTrajets(trajets, true);
       console.log("HTML généré :", document.getElementById('resultats-trajets').innerHTML);
     } catch (err) {
       console.error("Erreur lors de la récupération des trajets :", err);
@@ -68,16 +81,18 @@ window.addEventListener('DOMContentLoaded', () => {
   });
 
   function formaterDate(dateStr, heureStr) {
-    const options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
+    if (!dateStr || !heureStr) return 'Date non précisée';
     const date = new Date(`${dateStr}T${heureStr}`);
+    if (isNaN(date)) return 'Date non valide';
+    const options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
     const dateFormatee = date.toLocaleDateString('fr-FR', options);
     const heureFormatee = date.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
     return `${dateFormatee} à ${heureFormatee}`;
   }
 
-  async function afficherTrajets(trajets) {
+  async function afficherTrajets(trajets, append = false) {
     const conteneur = document.getElementById('resultats-trajets');
-    conteneur.innerHTML = '';
+    if (!append) conteneur.innerHTML = '';
 
     if (trajets.length === 0) {
       const villeDepart = document.getElementById('ville-depart').value;
@@ -118,12 +133,11 @@ window.addEventListener('DOMContentLoaded', () => {
         <img src="${trajet.photo_chauffeur || '/src/assets/images/default-avatar.png'}" alt="Photo de ${trajet.pseudo_chauffeur}" class="photo-chauffeur"/>
         <p><strong>Chauffeur :</strong> ${trajet.pseudo_chauffeur}</p>
         <p><strong>Note :</strong> ${trajet.note_chauffeur} ⭐ / 5</p>
-        <p><strong>Départ :</strong> ${trajet.date_depart ? formaterDate(trajet.date_depart.split(" ")[0], trajet.date_depart.split(" ")[1]) : 'Non défini'}</p>
+        <p><strong>Départ :</strong> ${trajet.date_depart ? formaterDate(trajet.date_depart, trajet.heure_depart) : 'Non défini'}</p>
         <p><strong>Arrivée :</strong> ${trajet.date_arrivee && trajet.heure_arrivee ? formaterDate(trajet.date_arrivee, trajet.heure_arrivee) : 'Non défini'}</p>
         <p><strong>Prix :</strong> ${trajet.prix} €</p>
         <p><strong>Places restantes :</strong> ${trajet.nb_places_disponibles}</p>
-        ${trajet.type_voiture === 'électrique' ? '<p class="eco-label">🌿 Voyage écologique</p>' : ''}
-        ${trajet.est_ecologique === 1 ? '<p class="eco-label">🌿 Voyage écologique</p>' : ''}
+        ${(trajet.est_ecologique == 1 || trajet.type_voiture?.toLowerCase() === 'électrique') ? '<p class="eco-label">🌿 Voyage écologique</p>' : ''}
         ${trajet.fumeur === 1 ? '<p class="tag-option tag-ok">🚬 Fumeur accepté</p>' : '<p class="tag-option tag-ko">🚫 Fumeur refusé</p>'}
         ${trajet.animaux === 1 ? '<p class="tag-option tag-ok">🐾 Animaux acceptés</p>' : '<p class="tag-option tag-ko">🚫 Animaux refusés</p>'}
         <button class="btn-detail-trajet">Voir détails</button>
