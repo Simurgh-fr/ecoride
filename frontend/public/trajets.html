@@ -23,6 +23,14 @@
       <input type="text" id="ville-depart" name="ville_depart" placeholder="Ville de départ" required />
       <input type="text" id="ville-arrivee" name="ville_arrivee" placeholder="Ville d’arrivée" required />
       <input type="date" id="date-trajet" name="date_trajet" required />
+      <div id="barre-filtres">
+        <button type="button" class="tag-toggle tag-ok" id="filtre-ecologique">🌿 Écologique</button>
+        <button type="button" class="tag-toggle tag-ok" id="filtre-fumeur" title="Fumeur accepté">🚬</button>
+        <button type="button" class="tag-toggle tag-ok" id="filtre-animaux" title="Animaux acceptés">🐾</button>
+        <input type="number" id="filtre-prix-max" placeholder="Prix max (€)" min="0" step="1" />
+        <input type="number" id="filtre-duree-max" placeholder="Durée max (min)" min="0" step="1" />
+        <input type="number" id="filtre-note-min" placeholder="Note min" step="0.1" min="0" max="5" />
+      </div>
       <button type="submit">Rechercher</button>
     </form>
     

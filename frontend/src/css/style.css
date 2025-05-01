@@ -239,3 +239,58 @@ main {
 .card-trajet p strong {
   color: #2E8B57;
 }
+
+/* === Barre de filtres === */
+#barre-filtres {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+#barre-filtres input[type="number"] {
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  width: 140px;
+}
+
+/* === Tags boutons === */
+.tag-filter,
+.tag-toggle {
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  border: 2px solid transparent;
+  background-color: #f5f5f5;
+  color: #333;
+  transition: all 0.2s ease;
+}
+
+.tag-filter:hover,
+.tag-toggle:hover {
+  background-color: #e0e0e0;
+}
+
+.tag-filter.selected {
+  background-color: #c8e6c9;
+  color: #1b5e20;
+  border-color: #81c784;
+}
+
+/* === Spécifiques fumeur/animaux === */
+.tag-ok {
+  border: 2px solid #388e3c !important;
+  background-color: #e8f5e9 !important;
+  color: #2e7d32 !important;
+}
+
+.tag-ko {
+  border: 2px solid #e53935 !important;
+  background-color: #ffebee !important;
+  color: #c62828 !important;
+}
