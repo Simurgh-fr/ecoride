@@ -222,6 +222,18 @@ main {
   display: inline-block;
 }
 
+/* === Tag écologique dans les cartes trajets === */
+.eco-label {
+  color: #2e7d32;
+  font-weight: bold;
+  font-style: italic;
+  margin-top: 6px;
+  background-color: #e8f5e9;
+  padding: 4px 8px;
+  border-radius: 4px;
+  display: inline-block;
+}
+
 .photo-chauffeur {
   width: 64px;
   height: 64px;
@@ -304,4 +316,40 @@ main {
   font-size: 1rem;
   margin-bottom: 16px;
   text-align: center;
+}
+
+/* Styles pour l’étoile dans le champ "Note min" */
+.note-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.note-wrapper input {
+  padding-right: 28px;
+}
+
+.note-star {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1rem;
+  color: #fbc02d;
+  pointer-events: none;
+}
+
+#resultats-trajets:empty {
+  display: none;
+}
+
+
+/* Harmonisation du select de note minimale */
+.note-wrapper select {
+  padding: 12px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  width: 100%;
+  font-family: inherit;
+  color: #555;
 }

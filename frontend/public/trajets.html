@@ -29,12 +29,21 @@
         <button type="button" class="tag-toggle tag-ok" id="filtre-animaux" title="Animaux acceptés">🐾</button>
         <input type="number" id="filtre-prix-max" placeholder="Prix max (€)" min="0" step="1" />
         <input type="number" id="filtre-duree-max" placeholder="Durée max (min)" min="0" step="1" />
-        <input type="number" id="filtre-note-min" placeholder="Note min" step="0.1" min="0" max="5" />
+        <div class="note-wrapper">
+          <select id="filtre-note-min">
+            <option value="">Note min</option>
+            <option value="1">1 ⭐</option>
+            <option value="2">2 ⭐</option>
+            <option value="3">3 ⭐</option>
+            <option value="4">4 ⭐</option>
+            <option value="5">5 ⭐</option>
+          </select>
+        </div>
       </div>
       <button type="submit">Rechercher</button>
     </form>
     
-    <div id="resultats-trajets"></div>
+    <div id="resultats-trajets" style="display: none;"></div>
   </main>
 
   <script type="module" src="/src/js/search-trajets.js"></script>

@@ -9,7 +9,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
   form.addEventListener('submit', async function (event) {
     event.preventDefault();
-    console.log("Formulaire déclenché");
 
     const villeDepart = document.getElementById('ville-depart').value;
     const villeArrivee = document.getElementById('ville-arrivee').value;
@@ -19,10 +18,10 @@ window.addEventListener('DOMContentLoaded', () => {
     const filtreEcologiqueBtn = document.getElementById('filtre-ecologique');
     const filtreFumeurBtn = document.getElementById('filtre-fumeur');
     const filtreAnimauxBtn = document.getElementById('filtre-animaux');
-    const filtreEcologique = filtreEcologiqueBtn?.classList.contains('selected');
+    const filtreEcologique = filtreEcologiqueBtn?.classList.contains('tag-ok');
     const filtrePrixMax = document.getElementById('filtre-prix-max')?.value;
     const filtreDureeMax = document.getElementById('filtre-duree-max')?.value;
-    const filtreNoteMin = document.getElementById('filtre-note-min')?.value;
+    const filtreNoteMin = document.getElementById('filtre-note-min')?.value || '';
     const filtreFumeur = filtreFumeurBtn?.classList.contains('tag-ok');
     const filtreAnimaux = filtreAnimauxBtn?.classList.contains('tag-ok');
 
@@ -39,11 +38,8 @@ window.addEventListener('DOMContentLoaded', () => {
       if (filtreAnimaux) url += `&animaux=1`;
       const response = await fetch(url);
       const data = await response.json();
-      console.log("Trajets reçus :", data.trajets);
-      console.log("Premier trajet :", data.trajets[0]);
       const trajets = data.trajets ?? [];
       const suggestions = data.suggestions ?? false;
-      console.log("Trajets reçus :", trajets);
 
       if (!Array.isArray(trajets)) {
         console.error("Erreur backend :", trajets);
@@ -58,7 +54,6 @@ window.addEventListener('DOMContentLoaded', () => {
       document.getElementById('resultats-trajets').innerHTML = html;
 
       afficherTrajets(trajets, true);
-      console.log("HTML généré :", document.getElementById('resultats-trajets').innerHTML);
     } catch (err) {
       console.error("Erreur lors de la récupération des trajets :", err);
     }
@@ -67,7 +62,6 @@ window.addEventListener('DOMContentLoaded', () => {
   // Écouteurs de clic pour les trois boutons de filtre visibles dans le HTML
   document.querySelectorAll('#filtre-ecologique, #filtre-fumeur, #filtre-animaux').forEach(btn => {
     btn.addEventListener('click', () => {
-      console.log('Clic détecté sur :', btn.id);
       btn.classList.toggle('selected');
 
       if (btn.classList.contains('tag-ok')) {
@@ -93,6 +87,12 @@ window.addEventListener('DOMContentLoaded', () => {
   async function afficherTrajets(trajets, append = false) {
     const conteneur = document.getElementById('resultats-trajets');
     if (!append) conteneur.innerHTML = '';
+
+    if (trajets.length === 0) {
+      conteneur.style.display = 'none';
+    } else {
+      conteneur.style.display = 'block';
+    }
 
     if (trajets.length === 0) {
       const villeDepart = document.getElementById('ville-depart').value;
@@ -125,7 +125,6 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     trajets.forEach(trajet => {
-      console.log("photo_chauffeur =", trajet.photo_chauffeur);
       const trajetDiv = document.createElement('div');
       trajetDiv.className = 'card-trajet';
       trajetDiv.innerHTML = `
@@ -144,5 +143,6 @@ window.addEventListener('DOMContentLoaded', () => {
       `;
       conteneur.appendChild(trajetDiv);
     });
+    conteneur.style.display = 'block';
   }
 });

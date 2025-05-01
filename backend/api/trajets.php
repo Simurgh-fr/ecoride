@@ -38,7 +38,7 @@ if ($date_trajet !== null && $date_trajet !== '') {
 $conditions[] = 'c.nb_places > 0';
 
 if ($ecologique !== null && $ecologique !== '') {
-    $conditions[] = '(v.energie = "électrique")';
+    $conditions[] = 'LOWER(v.energie) = "électrique"';
 }
 if ($prix_max !== null && $prix_max !== '') {
     $conditions[] = 'c.prix_personne <= :prix_max';
