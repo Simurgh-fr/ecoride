@@ -44,8 +44,16 @@
     </form>
     
     <div id="resultats-trajets" style="display: none;"></div>
+
+    <!-- Vue détaillée d’un covoiturage sélectionné -->
+    <section id="fiche-detaillee" style="display: none; padding: 1rem; border: 1px solid #ccc; margin-top: 2rem;">
+      <button onclick="fermerFiche()" style="float: right;">Fermer ✖</button>
+      <div id="contenu-detail">
+        <!-- Les détails du trajet s’afficheront ici -->
+      </div>
+    </section>
   </main>
 
   <script type="module" src="/src/js/search-trajets.js"></script>
-</body>
+  <script type="module" src="../src/js/detail-trajet.js"></script></body>
 </html>

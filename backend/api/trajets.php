@@ -71,6 +71,7 @@ $where = implode(' AND ', $conditions);
 
 $sql = "
     SELECT 
+        c.covoiturage_id AS id,
         c.lieu_depart,
         c.lieu_arrivee,
         c.date_depart,
@@ -116,6 +117,7 @@ try {
 
         $sql_prochains = "
             SELECT 
+                c.covoiturage_id AS id,
                 c.lieu_depart,
                 c.lieu_arrivee,
                 c.date_depart,

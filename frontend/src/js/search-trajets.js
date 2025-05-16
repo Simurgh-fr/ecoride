@@ -127,6 +127,7 @@ window.addEventListener('DOMContentLoaded', () => {
     trajets.forEach(trajet => {
       const trajetDiv = document.createElement('div');
       trajetDiv.className = 'card-trajet';
+      console.log("🔍 Clés du trajet :", Object.keys(trajet));
       trajetDiv.innerHTML = `
         <h3>${trajet.lieu_depart} ➔ ${trajet.lieu_arrivee}</h3>
         <img src="${trajet.photo_chauffeur || '/src/assets/images/default-avatar.png'}" alt="Photo de ${trajet.pseudo_chauffeur}" class="photo-chauffeur"/>
@@ -139,7 +140,7 @@ window.addEventListener('DOMContentLoaded', () => {
         ${(trajet.est_ecologique == 1 || trajet.type_voiture?.toLowerCase() === 'électrique') ? '<p class="eco-label">🌿 Voyage écologique</p>' : ''}
         ${trajet.fumeur === 1 ? '<p class="tag-option tag-ok">🚬 Fumeur accepté</p>' : '<p class="tag-option tag-ko">🚫 Fumeur refusé</p>'}
         ${trajet.animaux === 1 ? '<p class="tag-option tag-ok">🐾 Animaux acceptés</p>' : '<p class="tag-option tag-ko">🚫 Animaux refusés</p>'}
-        <button class="btn-detail-trajet">Voir détails</button>
+        <button class="btn-detail-trajet" data-id="${trajet.id}">Voir détails</button>
       `;
       conteneur.appendChild(trajetDiv);
     });
