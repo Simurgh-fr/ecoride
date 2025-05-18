@@ -15,4 +15,7 @@ Mon Mac
          ├── Apache2 (sert les fichiers PHP)
          ├── PHP 8.3 (interprète trajets.php)
          ├── MariaDB (gère la base ecoride)
-         └── phpMyAdmin (interface pour MariaDB)
+         ├── phpMyAdmin (interface pour MariaDB)
+         ├── MongoDB 7.0.18 (serveur NoSQL en local, port 27017)
+         ├── Mongo Express (interface web : http://mongo.local)
+         └── Extension PHP MongoDB (active via Apache + PECL)

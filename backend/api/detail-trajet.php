@@ -33,10 +33,13 @@ try {
             t.covoiturage_id AS id,
             t.lieu_depart, t.lieu_arrivee, t.date_depart, t.heure_depart,
             t.date_arrivee, t.heure_arrivee, t.nb_places AS nb_places_disponibles,
+            t.fumeur, t.animaux, t.prix_personne AS prix, t.statut,
             u.pseudo AS pseudo_chauffeur,
-            t.fumeur, t.animaux, t.prix_personne AS prix, t.statut
+            v.marque, v.modele, v.energie
         FROM covoiturage t
-        JOIN utilisateur u ON u.utilisateur_id = 1 -- ⚠️ à remplacer par une vraie relation si disponible
+        JOIN utilisateur u ON t.utilisateur_id = u.utilisateur_id
+        JOIN utilise u2 ON u2.utilisateur_id = u.utilisateur_id
+        JOIN voiture v ON v.voiture_id = u2.voiture_id
         WHERE t.covoiturage_id = :id
         LIMIT 1
     ");
@@ -44,11 +47,23 @@ try {
     $trajet = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($trajet) {
+        require_once __DIR__ . '/../config/vendor/autoload.php';
+
+        try {
+            $mongoClient = new MongoDB\Client("mongodb://localhost:27017");
+            $collection = $mongoClient->ecoride->avis;
+            $avisCursor = $collection->find(['utilisateur_id' => $trajet['id']]);
+            $avis = iterator_to_array($avisCursor, false);
+            $trajet['avis'] = $avis;
+        } catch (Exception $e) {
+            $trajet['avis'] = [];
+            $trajet['erreur_mongo'] = $e->getMessage();
+        }
         echo json_encode($trajet, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     } else {
         http_response_code(404);
         echo json_encode(['erreur' => 'Trajet non trouvé']);
-    }               
+    }
 } catch (PDOException $e) {
     http_response_code(500);
     echo json_encode([

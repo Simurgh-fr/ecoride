@@ -1,0 +1,16 @@
+{
+    "name": "simurgh/ecoride",
+    "autoload": {
+        "psr-4": {
+            "Simurgh\\Ecoride\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Simurgh"
+        }
+    ],
+    "require": {
+        "mongodb/mongodb": "^2.0"
+    }
+}
