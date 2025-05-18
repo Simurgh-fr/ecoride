@@ -1,0 +1,84 @@
+---
+
+ÉTAPE 0 – Accès à l’inscription depuis la page de connexion
+• Fichier : connexion.html
+• Logique :
+  - Ajouter un message sous le formulaire : 
+    “Vous n'avez pas encore de compte ? Rejoignez notre communauté de voyageurs écoresponsables”
+  - Ajouter un bouton/lien redirigeant vers la page `inscription.html`
+• Objectif : Laisser un seul point d’entrée (bouton “Connexion” dans le header) et proposer l’inscription directement depuis la page de connexion
+
+✅ PLAN D’ACTION – US7 : Création de compte utilisateur (SQL + NoSQL)
+
+Objectif : Permettre à un visiteur de créer un compte en alimentant à la fois la base SQL (utilisateurs) et la base NoSQL (infos utilisateurs), avec un identifiant unique partagé entre les deux.
+
+---
+
+ÉTAPE 1 – Création du formulaire HTML
+• Fichier : inscription.html
+• Champs requis :
+  - pseudo (type="text")
+  - email (type="email")
+  - password (type="password")
+  - bouton de soumission
+• Objectif : Afficher un formulaire fonctionnel pour l’inscription
+
+---
+
+ÉTAPE 2 – Validation côté client
+• Fichier : inscription.js
+• Logique :
+  - Vérifier que tous les champs sont remplis
+  - Vérifier la validité de l’email (RegExp)
+  - Vérifier la force du mot de passe (min. 8 caractères)
+• Objectif : Empêcher l’envoi de données invalides
+
+---
+
+ÉTAPE 3 – Insertion SQL (serveur PHP)
+• Fichier : inscription.php
+• Logique :
+  - Connexion à la base via PDO
+  - Vérification unicité de l’email (SELECT COUNT)
+  - Hashage du mot de passe (password_hash)
+  - Insertion dans table `users` avec 20 crédits par défaut
+  - Récupération de l’ID via PDO::lastInsertId()
+
+---
+
+ÉTAPE 3bis – Insertion MongoDB
+• Toujours dans inscription.php
+• Logique :
+  - Connexion à MongoDB
+  - Insertion dans la collection `users_infos` :
+    {
+      "id": <ID_SQL>,
+      "preferences": {},
+      "avis": []
+    }
+
+---
+
+ÉTAPE 4 – Envoi & réponse côté client
+• Fichier : inscription.js
+• Logique :
+  - Envoi des données en fetch() POST vers inscription.php
+  - Traitement de la réponse JSON
+    > Succès : redirection vers l’espace utilisateur
+    > Erreur : affichage du message
+
+---
+
+ÉTAPE 5 – Sécurité & nettoyage
+• Sanitation des données (trim, htmlspecialchars si besoin)
+• Requêtes préparées (PDO)
+• Gestion des erreurs PHP (try/catch + JSON clair)
+
+---
+
+ORDRE D’EXÉCUTION
+1. inscription.html
+2. inscription.js – validation
+3. inscription.php – SQL
+4. inscription.php – MongoDB
+5. inscription.js – fetch et redirection

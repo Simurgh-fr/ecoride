@@ -18,7 +18,24 @@
 
   <main>
     <h1>Inscription</h1>
-    <p>Contenu à venir...</p>
+    <form id="form-inscription" method="POST">
+      <div class="form-group">
+        <label for="pseudo">Pseudo :</label>
+        <input type="text" id="pseudo" name="pseudo" required />
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email :</label>
+        <input type="email" id="email" name="email" required />
+      </div>
+
+      <div class="form-group">
+        <label for="password">Mot de passe :</label>
+        <input type="password" id="password" name="password" required minlength="8" />
+      </div>
+
+      <button type="submit">Créer mon compte</button>
+    </form>
   </main>
 </body>
 </html>
