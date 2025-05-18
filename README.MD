@@ -136,14 +136,24 @@ José, directeur technique de l’entreprise, souhaite une application web aux c
 
 ### Répertoires montés automatiquement sur macOS
 
-- `/srv/samba/NAS` → `~/NAS`
 - `/srv/dev` → `~/dev`
 
 ### Script de montage automatique
 
-- `~/scripts/mount-all.sh`
+- Script : `~/Scripts/mount-all.sh`
+- Exécutable manuellement ou via Automator “Monter Dev”
+- Détecte automatiquement si l’utilisateur est en réseau local ou distant via Tailscale :
+  - 🏠 Réseau local (`192.168.1.112`) : montage via Samba directement
+  - 🌍 Réseau distant : lancement de Tailscale, puis montage via IP Tailscale (`100.127.235.81`)
+- Gère le volumes suivants : `/srv/dev` → `~/dev`
+- Journalisation dans `/tmp/mount-all.log`
+- Notifications système macOS affichées :
+  - Succès : notification sonore "Glass"
+  - Échec ou serveur injoignable : alerte "Funk"
+- Raccourcis utiles :
+  - Terminal : alias `monter`
+  - Automator cliquable : “Monter NAS & DEV”
 - Automatisé via `launchd`
-- Alias : `monter`, raccourci Automator : “Monter Dev”
 
 ### Services installés
 

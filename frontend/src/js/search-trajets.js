@@ -1,3 +1,5 @@
+import { baseUrl } from './config.js';
+
 window.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('search-form');
 
@@ -33,7 +35,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const filtreAnimaux = filtreAnimauxBtn?.classList.contains('tag-ok');
 
     try {
-      url = `http://dev.local/ecoride-backend/api/trajets.php?lieu_depart=${villeDepart}&lieu_arrivee=${villeArrivee}`;
+      url = `${baseUrl}trajets.php?lieu_depart=${villeDepart}&lieu_arrivee=${villeArrivee}`;
       if (dateTrajet) url += `&date_trajet=${dateTrajet}`;
       if (filtreEcologique) url += `&ecologique=1`;
       if (filtrePrixMax) url += `&prix_max=${encodeURIComponent(filtrePrixMax)}`;
@@ -135,7 +137,7 @@ window.addEventListener('DOMContentLoaded', () => {
       const villeArrivee = document.getElementById('ville-arrivee').value;
       const dateTrajet = document.getElementById('date-trajet').value;
 
-      const tousTrajets = await fetch(`http://dev.local/ecoride-backend/api/trajets.php?lieu_depart=${villeDepart}&lieu_arrivee=${villeArrivee}&date_trajet=`)
+      const tousTrajets = await fetch(`${baseUrl}trajets.php?lieu_depart=${villeDepart}&lieu_arrivee=${villeArrivee}&date_trajet=`)
         .then(res => res.json())
         .catch(err => {
           console.error("Erreur lors de la récupération des trajets disponibles :", err);
@@ -182,22 +184,9 @@ window.addEventListener('DOMContentLoaded', () => {
         ${(trajet.est_ecologique == 1 || trajet.type_voiture?.toLowerCase() === 'électrique') ? '<p class="eco-label">🌿 Voyage écologique</p>' : ''}
         ${trajet.fumeur === 1 ? '<p class="tag-option tag-ok">🚬 Fumeur accepté</p>' : '<p class="tag-option tag-ko">🚫 Fumeur refusé</p>'}
         ${trajet.animaux === 1 ? '<p class="tag-option tag-ok">🐾 Animaux acceptés</p>' : '<p class="tag-option tag-ko">🚫 Animaux refusés</p>'}
-        <button class="btn-voir-avis" data-id="${trajet.utilisateur_id}">Voir avis</button>
+        <button class="btn-voir-avis" data-utilisateur-id="${trajet.utilisateur_id}">Voir avis</button>
       `;
       conteneur.appendChild(trajetDiv);
-      // Ajout de l'écouteur pour le bouton "Voir avis"
-      trajetDiv.querySelector('.btn-voir-avis').addEventListener('click', async (e) => {
-        const userId = e.target.dataset.id;
-        try {
-          const res = await fetch(`http://dev.local/ecoride-backend/api/getAvis.php?utilisateur_id=${userId}`);
-          const avis = await res.json();
-          console.log("📝 Avis utilisateur :", avis);
-          // Tu peux ici afficher dans un popup ou une modal
-          alert(avis.length ? `Avis :\n${avis.map(a => `- ${a.note}⭐ ${a.commentaire}`).join('\n')}` : "Aucun avis disponible.");
-        } catch (err) {
-          console.error("Erreur lors de la récupération des avis :", err);
-        }
-      });
     });
     conteneur.style.display = 'block';
   }
