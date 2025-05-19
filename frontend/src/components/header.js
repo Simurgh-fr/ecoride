@@ -10,7 +10,7 @@ export function createHeader() {
        <a href="index.html">Accueil</a>
        <a href="trajets.html">Trajets</a>
        <a href="profil.html">Mon profil</a>
-       <button class="btn-login" onclick="window.location.href='connexion.html'">Connexion</button>
+       <span class="auth-button"></span>
       </nav>
       <div class="mobile-menu-icon">
         <span class="menu-toggle">&#9776;</span>
@@ -20,7 +20,7 @@ export function createHeader() {
       <a href="index.html">Accueil</a>
       <a href="trajets.html">Trajets</a>
       <a href="profil.html">Mon profil</a>
-      <button class="btn-login" onclick="window.location.href='connexion.html'">Connexion</button>
+      <span class="auth-button"></span>
     </div>
   `;
 
@@ -48,4 +48,38 @@ export function createHeader() {
       link.classList.add('active');
     }
   });
+
+  // Auth button dynamic rendering
+  const authSpans = header.querySelectorAll('.auth-button');
+  setTimeout(() => {
+    fetch('/api/profil.php')
+      .then(res => {
+        if (res.ok) return res.json();
+        throw new Error("Non connecté");
+      })
+      .then(data => {
+        localStorage.setItem('isAuthenticated', 'true');
+        authSpans.forEach(span => {
+          const logoutButton = document.createElement('button');
+          logoutButton.classList.add('btn-login');
+          logoutButton.id = 'logout-button';
+          logoutButton.textContent = 'Déconnexion';
+          logoutButton.addEventListener('click', () => {
+            fetch('/api/deconnexion.php')
+              .then(() => {
+                localStorage.setItem('isAuthenticated', 'false');
+                window.location.href = 'connexion.html';
+              });
+          });
+          span.innerHTML = '';
+          span.appendChild(logoutButton);
+        });
+      })
+      .catch(() => {
+        authSpans.forEach(span => {
+          localStorage.setItem('isAuthenticated', 'false');
+          span.innerHTML = '<button class="btn-login" onclick="window.location.href=\'connexion.html\'">Connexion</button>';
+        });
+      });
+  }, 100);
 }

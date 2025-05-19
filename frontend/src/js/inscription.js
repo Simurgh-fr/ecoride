@@ -40,7 +40,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
       console.log(data);
       if (data.success) {
-        window.location.href = "profil.html";
+        localStorage.setItem("isAuthenticated", "true");
+        sessionStorage.setItem("utilisateur_id", data.utilisateur_id);
+        sessionStorage.setItem("pseudo", data.pseudo);
+        sessionStorage.setItem("nom", data.nom);
+        sessionStorage.setItem("prenom", data.prenom);
+        sessionStorage.setItem("email", data.email);
+        sessionStorage.setItem("credit", data.credit);
+        window.location.replace("profil.html");
       } else {
         alert(data.message || "Erreur lors de la création du compte.");
       }

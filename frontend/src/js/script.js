@@ -12,10 +12,12 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   const form = document.getElementById('search-form');
-  
-  form.addEventListener('submit', function(event) {
-    event.preventDefault();
-    alert('Recherche envoyée ! 🚗🌿');
-    // Ici plus tard on branchera vraiment la logique de recherche ;)
-  });
+
+  if (form) {
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+      alert('Recherche envoyée ! 🚗🌿');
+      // Ici plus tard on branchera vraiment la logique de recherche ;)
+    });
+  }
 });

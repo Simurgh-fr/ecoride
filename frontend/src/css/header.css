@@ -122,8 +122,8 @@ header {
   border-radius: 5px;
   font-size: 1rem;
   margin: 10px auto;
-  width: 80%;
-  text-align: center;
+  width: auto;
+  white-space: normal;
 }
 
 .mobile-menu .btn-login:hover {

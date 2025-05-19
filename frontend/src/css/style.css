@@ -1,3 +1,31 @@
+#form-photo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+#form-photo label {
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+#form-photo input[type="file"] {
+  margin-bottom: 10px;
+}
+
+#form-photo button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#form-photo button:hover {
+  background-color: #388E3C;
+}
 /* Base générale */
 body {
   margin: 0;
@@ -381,4 +409,19 @@ form input[type="password"] {
   border: 1px solid #ccc;
   font-size: 1rem;
   font-family: inherit;
+}
+/* === Photo profil === */
+.photo-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+#photo-profil {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ccc;
+  display: block;
 }

@@ -59,6 +59,9 @@ try {
     session_start();
     $_SESSION['utilisateur_id'] = $userId;
     $_SESSION['pseudo'] = $pseudo;
+    $_SESSION['nom'] = $nom;
+    $_SESSION['prenom'] = $prenom;
+    $_SESSION['email'] = $email;
     $_SESSION['credit'] = 20;
 
     // Insertion MongoDB

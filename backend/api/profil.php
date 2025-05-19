@@ -6,7 +6,11 @@ header('Content-Type: application/json');
 $response = [
   'utilisateur_id' => $_SESSION['utilisateur_id'],
   'pseudo' => $_SESSION['pseudo'],
-  'credit' => $_SESSION['credit']
+  'credit' => $_SESSION['credit'],
+  'nom' => $_SESSION['nom'],
+  'prenom' => $_SESSION['prenom'],
+  'email' => $_SESSION['email'],
+  'photo' => !empty($_SESSION['photo']) ? '/ecoride' . $_SESSION['photo'] : '/ecoride/src/assets/images/default-avatar.png'
 ];
 
 echo json_encode($response);
