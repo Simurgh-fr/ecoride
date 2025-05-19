@@ -1,6 +1,3 @@
-
-
-
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("form-inscription");
 
@@ -8,11 +5,13 @@ document.addEventListener("DOMContentLoaded", () => {
     e.preventDefault();
 
     const pseudo = document.getElementById("pseudo").value.trim();
+    const nom = document.getElementById("nom").value.trim();
+    const prenom = document.getElementById("prenom").value.trim();
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value;
 
     // Validation simple
-    if (!pseudo || !email || !password) {
+    if (!pseudo || !nom || !prenom || !email || !password) {
       alert("Tous les champs sont obligatoires.");
       return;
     }
@@ -28,15 +27,18 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
+    console.log("Formulaire soumis");
+
     try {
-      const response = await fetch("../../backend/api/inscription.php", {
+      const response = await fetch("/api/inscription.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ pseudo, email, password }),
+        body: JSON.stringify({ pseudo, nom, prenom, email, password }),
       });
 
       const data = await response.json();
 
+      console.log(data);
       if (data.success) {
         window.location.href = "profil.html";
       } else {
