@@ -16,7 +16,7 @@ try {
         exit;
     }
 
-    $stmt = $pdo->prepare("SELECT utilisateur_id, pseudo, password, nom, prenom, email, credit FROM utilisateur WHERE email = ?");
+    $stmt = $pdo->prepare("SELECT utilisateur_id, pseudo, password, nom, prenom, email, credit, photo FROM utilisateur WHERE email = ?");
     $stmt->execute([$email]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -38,21 +38,19 @@ try {
     error_log("✅ Authentification réussie pour : " . $user['email']);
 
     session_start();
-    $_SESSION['utilisateur_id'] = $user['utilisateur_id'];
-    $_SESSION['pseudo'] = $user['pseudo'];
-    $_SESSION['email'] = $user['email'];
-    $_SESSION['nom'] = $user['nom'];
-    $_SESSION['prenom'] = $user['prenom'];
-    $_SESSION['credit'] = $user['credit'];
+    $_SESSION = [
+        'utilisateur_id' => $user['utilisateur_id'],
+        'pseudo' => $user['pseudo'],
+        'email' => $user['email'],
+        'nom' => $user['nom'],
+        'prenom' => $user['prenom'],
+        'credit' => $user['credit'],
+        'photo' => !empty($user['photo']) ? $user['photo'] : null
+    ];
 
     echo json_encode([
         'success' => true,
-        'utilisateur_id' => $user['utilisateur_id'],
-        'pseudo' => $user['pseudo'],
-        'nom' => $user['nom'],
-        'prenom' => $user['prenom'],
-        'email' => $user['email'],
-        'credit' => $user['credit']
+        'session' => $_SESSION
     ]);
 } catch (Exception $e) {
     echo json_encode(['success' => false, 'message' => 'Erreur serveur : ' . $e->getMessage()]);

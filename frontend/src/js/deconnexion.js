@@ -3,9 +3,13 @@ export function logout() {
   fetch(`${window.location.origin}/ecoride/backend/api/deconnexion.php`)
     .then((response) => {
       if (response.ok) {
+        // Nettoyage avant redirection
         sessionStorage.clear();
-        console.log("SessionStorage vidé");
-        window.location.href = 'index.html';
+        localStorage.setItem('isAuthenticated', 'false');
+        console.log("SessionStorage vidé et isAuthenticated = false");
+
+        // Redirection simple après mise à jour
+        window.location.href = "/ecoride/connexion.html";
       } else {
         throw new Error("Erreur côté serveur lors de la déconnexion.");
       }
@@ -15,10 +19,3 @@ export function logout() {
       alert("Erreur lors de la déconnexion.");
     });
 }
-
-// Ajout d'un écouteur global pour capturer dynamiquement les clics
-document.addEventListener('click', function (e) {
-  if (e.target && e.target.id === 'logout-button') {
-    logout();
-  }
-});

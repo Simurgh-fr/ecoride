@@ -34,11 +34,43 @@ document.addEventListener("DOMContentLoaded", () => {
       if (data.photo) {
         document.getElementById("photo-profil").src = data.photo;
       } else {
-        document.getElementById("photo-profil").src = "../public/img/default-user.png"; // chemin par défaut
+        document.getElementById("photo-profil").src = "/src/assets/images/default-avatar.png";
       }
     })
     .catch(error => {
       console.error("Erreur : ", error);
       window.location.href = "connexion.html?message=unauthorized";
+    });
+});
+
+// Gestion de la popup de modification de photo
+document.getElementById("open-popup").addEventListener("click", () => {
+  document.getElementById("popup-photo").style.display = "flex";
+});
+
+document.getElementById("close-popup").addEventListener("click", () => {
+  document.getElementById("popup-photo").style.display = "none";
+});
+
+// Rafraîchissement automatique après upload
+const formPhoto = document.getElementById("form-photo");
+formPhoto.addEventListener("submit", function (e) {
+  e.preventDefault();
+  const formData = new FormData(formPhoto);
+
+  fetch(formPhoto.action, {
+    method: "POST",
+    body: formData,
+  })
+    .then((response) => response.json())
+    .then((result) => {
+      if (result.success) {
+        window.location.reload(); // rechargement complet de la page
+      } else {
+        alert("Erreur : " + result.message);
+      }
+    })
+    .catch((error) => {
+      console.error("Erreur lors de l'upload de la photo :", error);
     });
 });

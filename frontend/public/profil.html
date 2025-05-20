@@ -15,11 +15,19 @@
     <div class="photo-container">
       <img id="photo-profil" alt="Photo de profil" />
     </div>
-    <form id="form-photo" action="/api/upload_photo.php" method="POST" enctype="multipart/form-data">
-      <label for="photo">Changer ma photo de profil :</label>
-      <input type="file" name="photo" id="photo" accept="image/*" />
-      <button type="submit">Mettre à jour</button>
-    </form>
+    <p class="edit-photo-link" id="open-popup">Modifier la photo</p>
+
+    <div class="popup-photo" id="popup-photo" style="display: none;">
+      <div class="popup-content">
+        <span class="close-popup" id="close-popup">&times;</span>
+        <h2>Modifier la photo de profil</h2>
+        <form id="form-photo" action="/api/upload_photo.php" method="POST" enctype="multipart/form-data">
+          <label for="photo">Importer une photo :</label>
+          <input type="file" name="photo" id="photo" accept="image/*" />
+          <button type="submit" class="btn-upload">Importer</button>
+        </form>
+      </div>
+    </div>
     <h1>Bienvenue <span id="pseudo"></span> !</h1>
     <p>Vous disposez actuellement de <strong><span id="credit"></span> crédits</strong>.</p>
 

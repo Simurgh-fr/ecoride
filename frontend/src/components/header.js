@@ -49,37 +49,34 @@ export function createHeader() {
     }
   });
 
-  // Auth button dynamic rendering
   const authSpans = header.querySelectorAll('.auth-button');
-  setTimeout(() => {
-    fetch('/api/profil.php')
-      .then(res => {
-        if (res.ok) return res.json();
-        throw new Error("Non connecté");
-      })
-      .then(data => {
-        localStorage.setItem('isAuthenticated', 'true');
-        authSpans.forEach(span => {
-          const logoutButton = document.createElement('button');
-          logoutButton.classList.add('btn-login');
-          logoutButton.id = 'logout-button';
-          logoutButton.textContent = 'Déconnexion';
-          logoutButton.addEventListener('click', () => {
-            fetch('/api/deconnexion.php')
-              .then(() => {
-                localStorage.setItem('isAuthenticated', 'false');
-                window.location.href = 'connexion.html';
-              });
-          });
-          span.innerHTML = '';
-          span.appendChild(logoutButton);
-        });
-      })
-      .catch(() => {
-        authSpans.forEach(span => {
+
+  function renderAuthButton() {
+    const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
+    authSpans.forEach(span => {
+      span.innerHTML = '';
+      if (isAuthenticated) {
+        const logoutButton = document.createElement('button');
+        logoutButton.classList.add('btn-login');
+        logoutButton.id = 'logout-button';
+        logoutButton.textContent = 'Déconnexion';
+        logoutButton.addEventListener('click', () => {
           localStorage.setItem('isAuthenticated', 'false');
-          span.innerHTML = '<button class="btn-login" onclick="window.location.href=\'connexion.html\'">Connexion</button>';
+          sessionStorage.clear();
+          renderAuthButton();
+          window.location.href = 'connexion.html';
         });
-      });
-  }, 100);
+        span.appendChild(logoutButton);
+      } else {
+        const loginButton = document.createElement('button');
+        loginButton.classList.add('btn-login');
+        loginButton.textContent = 'Connexion';
+        loginButton.onclick = () => window.location.href = 'connexion.html';
+        span.appendChild(loginButton);
+      }
+    });
+  }
+
+  renderAuthButton();
+  window.addEventListener('storage', renderAuthButton); // écoute les changements de localStorage
 }

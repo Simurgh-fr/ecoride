@@ -9,7 +9,7 @@ if (!isset($pdo)) {
     echo json_encode(["error" => "Erreur de connexion à la base de données"]);
     exit;
 }
-var_dump($pdo); // À supprimer ensuite
+
 header('Content-Type: application/json');
 
 if (!isset($_SESSION['utilisateur_id'])) {

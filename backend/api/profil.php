@@ -10,7 +10,7 @@ $response = [
   'nom' => $_SESSION['nom'],
   'prenom' => $_SESSION['prenom'],
   'email' => $_SESSION['email'],
-  'photo' => !empty($_SESSION['photo']) ? '/ecoride' . $_SESSION['photo'] : '/ecoride/src/assets/images/default-avatar.png'
+  'photo' => $_SESSION['photo'],
 ];
 
 echo json_encode($response);
