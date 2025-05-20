@@ -3,22 +3,38 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nom de la page</title>
+  <title>EcoRide - Connexion</title>
   <link rel="stylesheet" href="../src/css/style.css" />
   <link rel="stylesheet" href="../src/css/header.css" />
   <link rel="stylesheet" href="../src/css/footer.css" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
 </head>
 <body>
-  <script type="module">
-    import { createHeader } from "../src/components/header.js";
-    import { createFooter } from "../src/components/footer.js";
-    createHeader();
-    createFooter();
-  </script>
 
   <main>
     <h1>Connexion</h1>
-    <p>Contenu à venir...</p>
+
+    <form id="form-connexion" method="POST">
+      <div class="form-group">
+        <label for="email">Email :</label>
+        <input type="email" id="email" name="email" required />
+      </div>
+
+      <div class="form-group">
+        <label for="password">Mot de passe :</label>
+        <input type="password" id="password" name="password" required />
+      </div>
+
+      <button type="submit">Se connecter</button>
+    </form>
+
+    <p style="margin-top: 20px; text-align: center;">
+      Vous n'avez pas encore de compte ? <br />
+      <button onclick="window.location.href='inscription.html'" class="btn-register">Rejoignez notre communauté de voyageurs écoresponsables</button>
+    </p>
   </main>
+
+  <script type="module" src="../src/js/script.js"></script>
+  <script type="module" src="../src/js/connexion.js"></script>
 </body>
 </html>

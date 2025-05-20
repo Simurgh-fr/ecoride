@@ -1,3 +1,5 @@
+import { baseUrl } from './config.js';
+
 window.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('search-form');
 
@@ -10,9 +12,16 @@ window.addEventListener('DOMContentLoaded', () => {
   form.addEventListener('submit', async function (event) {
     event.preventDefault();
 
+    let url = ''; // initialise url en dehors du try pour qu'elle soit accessible dans le catch
+
     const villeDepart = document.getElementById('ville-depart').value;
     const villeArrivee = document.getElementById('ville-arrivee').value;
     const dateTrajet = document.getElementById('date-trajet').value;
+
+    if (!villeDepart || !villeArrivee) {
+      console.warn("Ville de départ ou d’arrivée manquante.");
+      return;
+    }
 
     // Récupération des nouveaux filtres
     const filtreEcologiqueBtn = document.getElementById('filtre-ecologique');
@@ -26,36 +35,65 @@ window.addEventListener('DOMContentLoaded', () => {
     const filtreAnimaux = filtreAnimauxBtn?.classList.contains('tag-ok');
 
     try {
-      let url = `http://dev.local/ecoride-backend/api/trajets.php?lieu_depart=${villeDepart}&lieu_arrivee=${villeArrivee}`;
-      if (dateTrajet) {
-        url += `&date_trajet=${dateTrajet}`;
-      }
+      url = `${baseUrl}trajets.php?lieu_depart=${villeDepart}&lieu_arrivee=${villeArrivee}`;
+      if (dateTrajet) url += `&date_trajet=${dateTrajet}`;
       if (filtreEcologique) url += `&ecologique=1`;
       if (filtrePrixMax) url += `&prix_max=${encodeURIComponent(filtrePrixMax)}`;
       if (filtreDureeMax) url += `&duree_max=${encodeURIComponent(filtreDureeMax)}`;
       if (filtreNoteMin) url += `&note_min=${encodeURIComponent(filtreNoteMin)}`;
       if (filtreFumeur) url += `&fumeur=1`;
       if (filtreAnimaux) url += `&animaux=1`;
+
+      const resultContainer = document.getElementById('resultats-trajets');
+      if (!resultContainer) {
+        console.error("Élément #resultats-trajets introuvable dans le DOM.");
+        return;
+      }
+
+      console.log("🔗 URL finale construite :", url);
       const response = await fetch(url);
+      const contentType = response.headers.get("content-type");
+      if (!contentType || !contentType.includes("application/json")) {
+        const text = await response.text();
+        throw new Error("Réponse non JSON : " + text);
+      }
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error("Erreur backend (statut HTTP) :", response.status);
+        console.error("Détail réponse backend :", errorText);
+        resultContainer.innerHTML = `
+          <div class="message-erreur">
+            <p><strong>Erreur serveur :</strong><br>${errorText || "Impossible de récupérer les trajets."}</p>
+          </div>`;
+        return;
+      }
+
       const data = await response.json();
       const trajets = data.trajets ?? [];
       const suggestions = data.suggestions ?? false;
 
       if (!Array.isArray(trajets)) {
-        console.error("Erreur backend :", trajets);
-        document.getElementById('resultats-trajets').innerHTML = '<p>Une erreur est survenue. Veuillez réessayer plus tard.</p>';
+        console.error("Erreur backend : données inattendues", trajets);
+        resultContainer.innerHTML = '<p>Réponse invalide reçue. Veuillez réessayer plus tard.</p>';
         return;
       }
 
       let html = '';
       if (suggestions) {
-        html += '<div class="message-suggestion"><p>Pas de trajet à la date ou au critères demandés.<br><strong>Suggestion d\'autres trajets :</strong></p></div>';
+        html += '<div class="message-suggestion"><p>Pas de trajet à la date ou aux critères demandés.<br><strong>Suggestions d\'autres trajets :</strong></p></div>';
       }
-      document.getElementById('resultats-trajets').innerHTML = html;
+      resultContainer.innerHTML = html;
 
       afficherTrajets(trajets, true);
     } catch (err) {
-      console.error("Erreur lors de la récupération des trajets :", err);
+      console.error("Erreur attrapée dans le bloc catch :", err.message);
+      console.log("🔗 URL de la requête ayant échoué :", url);
+      console.error("Erreur JS lors de la récupération des trajets :", err);
+      const resultContainer = document.getElementById('resultats-trajets') || document.body;
+      if (resultContainer) {
+        resultContainer.innerHTML = '<p>Erreur technique lors de la récupération des trajets. Détail : ' + err.message + '</p>';
+      }
     }
   });
 
@@ -99,7 +137,7 @@ window.addEventListener('DOMContentLoaded', () => {
       const villeArrivee = document.getElementById('ville-arrivee').value;
       const dateTrajet = document.getElementById('date-trajet').value;
 
-      const tousTrajets = await fetch(`http://dev.local/ecoride-backend/api/trajets.php?lieu_depart=${villeDepart}&lieu_arrivee=${villeArrivee}&date_trajet=`)
+      const tousTrajets = await fetch(`${baseUrl}trajets.php?lieu_depart=${villeDepart}&lieu_arrivee=${villeArrivee}&date_trajet=`)
         .then(res => res.json())
         .catch(err => {
           console.error("Erreur lors de la récupération des trajets disponibles :", err);
@@ -127,10 +165,17 @@ window.addEventListener('DOMContentLoaded', () => {
     trajets.forEach(trajet => {
       const trajetDiv = document.createElement('div');
       trajetDiv.className = 'card-trajet';
+      console.log("🔍 Clés du trajet :", Object.keys(trajet));
+
+      const voitureTexte = trajet.marque && trajet.modele
+        ? `${trajet.marque} ${trajet.modele}`
+        : trajet.marque || trajet.modele || 'Modèle inconnu';
+
       trajetDiv.innerHTML = `
         <h3>${trajet.lieu_depart} ➔ ${trajet.lieu_arrivee}</h3>
         <img src="${trajet.photo_chauffeur || '/src/assets/images/default-avatar.png'}" alt="Photo de ${trajet.pseudo_chauffeur}" class="photo-chauffeur"/>
         <p><strong>Chauffeur :</strong> ${trajet.pseudo_chauffeur}</p>
+        <p><strong>Voiture :</strong> ${voitureTexte}</p>
         <p><strong>Note :</strong> ${trajet.note_chauffeur} ⭐ / 5</p>
         <p><strong>Départ :</strong> ${trajet.date_depart ? formaterDate(trajet.date_depart, trajet.heure_depart) : 'Non défini'}</p>
         <p><strong>Arrivée :</strong> ${trajet.date_arrivee && trajet.heure_arrivee ? formaterDate(trajet.date_arrivee, trajet.heure_arrivee) : 'Non défini'}</p>
@@ -139,7 +184,7 @@ window.addEventListener('DOMContentLoaded', () => {
         ${(trajet.est_ecologique == 1 || trajet.type_voiture?.toLowerCase() === 'électrique') ? '<p class="eco-label">🌿 Voyage écologique</p>' : ''}
         ${trajet.fumeur === 1 ? '<p class="tag-option tag-ok">🚬 Fumeur accepté</p>' : '<p class="tag-option tag-ko">🚫 Fumeur refusé</p>'}
         ${trajet.animaux === 1 ? '<p class="tag-option tag-ok">🐾 Animaux acceptés</p>' : '<p class="tag-option tag-ko">🚫 Animaux refusés</p>'}
-        <button class="btn-detail-trajet">Voir détails</button>
+        <button class="btn-voir-avis" data-utilisateur-id="${trajet.utilisateur_id}">Voir avis</button>
       `;
       conteneur.appendChild(trajetDiv);
     });

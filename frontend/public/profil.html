@@ -3,22 +3,47 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nom de la page</title>
+  <title>EcoRide - Profil</title>
   <link rel="stylesheet" href="../src/css/style.css" />
   <link rel="stylesheet" href="../src/css/header.css" />
   <link rel="stylesheet" href="../src/css/footer.css" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
 </head>
 <body>
-  <script type="module">
-    import { createHeader } from "../src/components/header.js";
-    import { createFooter } from "../src/components/footer.js";
-    createHeader();
-    createFooter();
-  </script>
 
   <main>
-    <h1>Profil</h1>
-    <p>Contenu à venir...</p>
+    <div class="photo-container">
+      <img id="photo-profil" alt="Photo de profil" />
+    </div>
+    <p class="edit-photo-link" id="open-popup">Modifier la photo</p>
+
+    <div class="popup-photo" id="popup-photo" style="display: none;">
+      <div class="popup-content">
+        <span class="close-popup" id="close-popup">&times;</span>
+        <h2>Modifier la photo de profil</h2>
+        <form id="form-photo" action="/api/upload_photo.php" method="POST" enctype="multipart/form-data">
+          <label for="photo">Importer une photo :</label>
+          <input type="file" name="photo" id="photo" accept="image/*" />
+          <button type="submit" class="btn-upload">Importer</button>
+        </form>
+      </div>
+    </div>
+    <h1>Bienvenue <span id="pseudo"></span> !</h1>
+    <p>Vous disposez actuellement de <strong><span id="credit"></span> crédits</strong>.</p>
+
+    <section class="profil-infos">
+      <h2>Mes informations</h2>
+      <ul>
+        <li><strong>Prénom :</strong> <span id="info-prenom"></span></li>
+        <li><strong>Nom :</strong> <span id="info-nom"></span></li>
+        <li><strong>Email :</strong> <span id="info-email"></span></li>
+        <li><strong>Pseudo :</strong> <span id="info-pseudo"></span></li>
+        <li><strong>Crédits :</strong> <span id="info-credit"></span></li>
+      </ul>
+    </section>
   </main>
+  
+  <script type="module" src="../src/js/profil.js"></script>
+  <script type="module" src="../src/js/script.js"></script>
 </body>
 </html>

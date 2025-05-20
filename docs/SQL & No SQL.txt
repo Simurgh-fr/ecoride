@@ -1,0 +1,28 @@
+
+
+
+## Pourquoi combiner SQL et NoSQL dans le projet EcoRide ?
+
+Le projet EcoRide utilise une architecture de données hybride combinant à la fois des bases relationnelles (SQL) et non relationnelles (NoSQL), afin de répondre à des besoins complémentaires.
+
+### 🗂️ SQL pour la structure stable et relationnelle
+
+La base MariaDB (MySQL) gère toutes les entités structurées essentielles à l'application :
+- Les utilisateurs (inscription, profil)
+- Les trajets de covoiturage (lieux, horaires, nombre de places, prix)
+- Les voitures utilisées
+- Les participations aux trajets (passagers)
+
+Ce modèle relationnel permet de garantir l’intégrité référentielle, les jointures précises, et les requêtes filtrées complexes.
+
+### 🌱 NoSQL pour la souplesse et la scalabilité
+
+En complément, la base MongoDB est utilisée pour stocker les avis laissés par les passagers sur les conducteurs. Ces avis peuvent être très variés : certains comportent une note, d'autres un commentaire, une photo, une date ou des balises modération. Ce type de contenu évolutif s’intègre plus naturellement dans une base NoSQL :
+
+- Pas de schéma rigide : les documents peuvent évoluer librement
+- Requêtes rapides par identifiant de conducteur
+- Évolutivité horizontale plus facile si le volume d’avis devient important
+
+### 🔀 Conclusion
+
+L’utilisation combinée de SQL et NoSQL dans EcoRide permet de tirer le meilleur parti de chaque technologie : robustesse relationnelle pour les données critiques, et souplesse documentaire pour les données d’usage libre ou évolutif. C’est une architecture moderne, utilisée dans de nombreuses applications à grande échelle (Uber, Airbnb...).

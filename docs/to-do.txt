@@ -3,3 +3,5 @@
 │   ├── manuel-utilisation.pdf
 │   ├── doc-technique.pdf
 │   └── gestion-projet.pdf
+
+Après le profil créer gerer la redirection post incription vers la page profil.

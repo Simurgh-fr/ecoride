@@ -10,7 +10,7 @@ export function createHeader() {
        <a href="index.html">Accueil</a>
        <a href="trajets.html">Trajets</a>
        <a href="profil.html">Mon profil</a>
-       <button class="btn-login" onclick="window.location.href='connexion.html'">Connexion</button>
+       <span class="auth-button"></span>
       </nav>
       <div class="mobile-menu-icon">
         <span class="menu-toggle">&#9776;</span>
@@ -20,7 +20,7 @@ export function createHeader() {
       <a href="index.html">Accueil</a>
       <a href="trajets.html">Trajets</a>
       <a href="profil.html">Mon profil</a>
-      <button class="btn-login" onclick="window.location.href='connexion.html'">Connexion</button>
+      <span class="auth-button"></span>
     </div>
   `;
 
@@ -48,4 +48,35 @@ export function createHeader() {
       link.classList.add('active');
     }
   });
+
+  const authSpans = header.querySelectorAll('.auth-button');
+
+  function renderAuthButton() {
+    const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
+    authSpans.forEach(span => {
+      span.innerHTML = '';
+      if (isAuthenticated) {
+        const logoutButton = document.createElement('button');
+        logoutButton.classList.add('btn-login');
+        logoutButton.id = 'logout-button';
+        logoutButton.textContent = 'Déconnexion';
+        logoutButton.addEventListener('click', () => {
+          localStorage.setItem('isAuthenticated', 'false');
+          sessionStorage.clear();
+          renderAuthButton();
+          window.location.href = 'connexion.html';
+        });
+        span.appendChild(logoutButton);
+      } else {
+        const loginButton = document.createElement('button');
+        loginButton.classList.add('btn-login');
+        loginButton.textContent = 'Connexion';
+        loginButton.onclick = () => window.location.href = 'connexion.html';
+        span.appendChild(loginButton);
+      }
+    });
+  }
+
+  renderAuthButton();
+  window.addEventListener('storage', renderAuthButton); // écoute les changements de localStorage
 }

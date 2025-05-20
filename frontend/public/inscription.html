@@ -3,22 +3,48 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nom de la page</title>
+  <title>EcoRide - Inscription</title>
   <link rel="stylesheet" href="../src/css/style.css" />
   <link rel="stylesheet" href="../src/css/header.css" />
   <link rel="stylesheet" href="../src/css/footer.css" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
 </head>
 <body>
-  <script type="module">
-    import { createHeader } from "../src/components/header.js";
-    import { createFooter } from "../src/components/footer.js";
-    createHeader();
-    createFooter();
-  </script>
 
   <main>
     <h1>Inscription</h1>
-    <p>Contenu à venir...</p>
+    <form id="form-inscription" method="POST">
+
+      <div class="form-group">
+        <label for="pseudo">Pseudo :</label>
+        <input type="text" id="pseudo" name="pseudo" required />
+      </div>
+
+      <div class="form-group">
+        <label for="nom">Nom :</label>
+        <input type="text" id="nom" name="nom" required />
+      </div>
+
+      <div class="form-group">
+        <label for="prenom">Prénom :</label>
+        <input type="text" id="prenom" name="prenom" required />
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email :</label>
+        <input type="email" id="email" name="email" required />
+      </div>
+
+      <div class="form-group">
+        <label for="password">Mot de passe :</label>
+        <input type="password" id="password" name="password" required minlength="8" />
+      </div>
+
+      <button type="submit">Créer mon compte</button>
+    </form>
   </main>
+
+  <script src="../src/js/inscription.js"></script>
+  <script type="module" src="../src/js/script.js"></script>
 </body>
 </html>
