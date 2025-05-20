@@ -34,3 +34,10 @@ temp/
 *.swp
 *.swo
 *.swn
+
+# Ne pas suivre les fichiers Samba .smbdelete
+*.smbdelete*
+
+# --- Photos ---
+
+/frontend/public/uploads/photos/
