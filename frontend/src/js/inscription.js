@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
         sessionStorage.setItem("prenom", data.prenom);
         sessionStorage.setItem("email", data.email);
         sessionStorage.setItem("credit", data.credit);
-        window.location.replace("profil.html");
+        window.location.replace("profil.php");
       } else {
         alert(data.message || "Erreur lors de la création du compte.");
       }

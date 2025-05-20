@@ -1,3 +1,5 @@
+import { logout } from '../js/deconnexion.js';
+
 export function createHeader() {
   const header = document.createElement('header');
   header.innerHTML = `
@@ -8,8 +10,8 @@ export function createHeader() {
       </div>
       <nav class="desktop-menu">
        <a href="index.html">Accueil</a>
-       <a href="trajets.html">Trajets</a>
-       <a href="profil.html">Mon profil</a>
+       <a href="trajets.php">Trajets</a>
+       <a href="profil.php">Mon profil</a>
        <span class="auth-button"></span>
       </nav>
       <div class="mobile-menu-icon">
@@ -18,8 +20,8 @@ export function createHeader() {
     </div>
     <div class="mobile-menu">
       <a href="index.html">Accueil</a>
-      <a href="trajets.html">Trajets</a>
-      <a href="profil.html">Mon profil</a>
+      <a href="trajets.php">Trajets</a>
+      <a href="profil.php">Mon profil</a>
       <span class="auth-button"></span>
     </div>
   `;
@@ -61,10 +63,7 @@ export function createHeader() {
         logoutButton.id = 'logout-button';
         logoutButton.textContent = 'Déconnexion';
         logoutButton.addEventListener('click', () => {
-          localStorage.setItem('isAuthenticated', 'false');
-          sessionStorage.clear();
-          renderAuthButton();
-          window.location.href = 'connexion.html';
+          logout();
         });
         span.appendChild(logoutButton);
       } else {

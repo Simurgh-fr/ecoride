@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
         sessionStorage.setItem("email", data.session.email);
         sessionStorage.setItem("credit", data.session.credit);
         sessionStorage.setItem("photo", data.session.photo);
-        window.location.replace("profil.html");
+        window.location.replace("profil.php");
       } else {
         alert(data.message || "Échec de la connexion.");
       }

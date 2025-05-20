@@ -3,6 +3,12 @@ require_once '../config/session.php';
 
 header('Content-Type: application/json');
 
+if (!isset($_SESSION['utilisateur_id'])) {
+  http_response_code(401);
+  echo json_encode(['success' => false, 'message' => 'Non authentifié']);
+  exit;
+}
+
 $response = [
   'utilisateur_id' => $_SESSION['utilisateur_id'],
   'pseudo' => $_SESSION['pseudo'],

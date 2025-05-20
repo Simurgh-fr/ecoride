@@ -1,6 +1,12 @@
 export function logout() {
   console.log("Déconnexion en cours...");
-  fetch(`${window.location.origin}/ecoride/backend/api/deconnexion.php`)
+  fetch("/api/deconnexion.php", {
+    method: 'POST',
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
     .then((response) => {
       if (response.ok) {
         // Nettoyage avant redirection

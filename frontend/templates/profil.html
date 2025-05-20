@@ -46,12 +46,43 @@
       <form id="form-role">
         <label><input type="checkbox" name="role[]" value="1" /> Conducteur</label><br />
         <label><input type="checkbox" name="role[]" value="2" /> Passager</label><br />
-        <button type="submit">Mettre à jour mon rôle</button>
+      </form>
+    </section>
+    <section id="conducteur-fields" style="display: none;">
+      <h2>Informations Conducteur</h2>
+      <form id="form-conducteur">
+        <label for="immatriculation">Immatriculation :</label><br />
+        <input type="text" id="immatriculation" name="immatriculation" /><br />
+
+        <label for="marque">Marque :</label><br />
+        <input type="text" id="marque" name="marque" /><br />
+
+        <label for="modele">Modèle :</label><br />
+        <input type="text" id="modele" name="modele" /><br />
+
+        <label for="couleur">Couleur :</label><br />
+        <input type="text" id="couleur" name="couleur" /><br />
+
+        <label for="energie">Énergie :</label><br />
+        <input type="text" id="energie" name="energie" /><br />
+
+        <label for="date_immatriculation">Date de première immatriculation :</label><br />
+        <input type="date" id="date_immatriculation" name="date_immatriculation" /><br />
+
+        <label for="places">Nombre de places disponibles :</label><br />
+        <input type="number" id="places" name="places" min="1" max="8" /><br />
+
+        <fieldset>
+          <legend>Préférences :</legend>
+          <label><input type="checkbox" name="preferences[]" value="fumeur" /> Accepte les fumeurs</label><br />
+          <label><input type="checkbox" name="preferences[]" value="animaux" /> Accepte les animaux</label>
+        </fieldset>
+        
       </form>
     </section>
   </main>
   
-  <script type="module" src="../src/js/profil.js"></script>
-  <script type="module" src="../src/js/script.js"></script>
+  <script type="module" src="../src/js/profil.js" defer></script>
+  <script type="module" src="../src/js/script.js" defer></script>
 </body>
 </html>
