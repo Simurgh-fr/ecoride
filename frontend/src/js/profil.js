@@ -36,6 +36,40 @@ document.addEventListener("DOMContentLoaded", () => {
       } else {
         document.getElementById("photo-profil").src = "/src/assets/images/default-avatar.png";
       }
+
+  // Chargement des rôles actuels
+  fetch("/api/mes_roles.php")
+    .then(res => res.json())
+    .then(roles => {
+      roles.forEach(roleId => {
+        const checkbox = document.querySelector(`input[name='role[]'][value='${roleId}']`);
+        if (checkbox) checkbox.checked = true;
+      });
+    })
+    .catch(err => console.error("Erreur chargement rôles :", err));
+
+  // Soumission du formulaire des rôles
+  const formRole = document.getElementById("form-role");
+  formRole.addEventListener("submit", function (e) {
+    e.preventDefault();
+    const formData = new FormData(formRole);
+    fetch("/api/update_roles.php", {
+      method: "POST",
+      body: formData
+    })
+      .then(res => res.json())
+      .then(result => {
+        if (result.success) {
+          alert("Rôle(s) mis à jour avec succès !");
+        } else {
+          alert("Erreur lors de la mise à jour : " + result.message);
+        }
+      })
+      .catch(err => {
+        console.error("Erreur lors de la mise à jour des rôles :", err);
+        alert("Une erreur est survenue.");
+      });
+  });
     })
     .catch(error => {
       console.error("Erreur : ", error);

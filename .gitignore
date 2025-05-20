@@ -13,10 +13,14 @@ yarn-error.log*
 # --- PHP / Apache / phpMyAdmin / MariaDB ---
 vendor/
 *.log
-*.sql
 *.sqlite
 *.env
 *.php~
+# On ignore les exports/dumps automatiques
+*.dump.sql
+*.backup.sql
+*.export.sql
+
 
 # --- Dossiers générés / cache éventuels ---
 build/
