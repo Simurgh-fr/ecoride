@@ -16,7 +16,7 @@ try {
         exit;
     }
 
-    $stmt = $pdo->prepare("SELECT utilisateur_id, pseudo, password, nom, prenom, email, credit, photo FROM utilisateur WHERE email = ?");
+    $stmt = $pdo->prepare("SELECT utilisateur_id, pseudo, password, nom, prenom, email, credit, photo, adresse, date_naissance, telephone FROM utilisateur WHERE email = ?");
     $stmt->execute([$email]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -45,8 +45,31 @@ try {
         'nom' => $user['nom'],
         'prenom' => $user['prenom'],
         'credit' => $user['credit'],
+        'adresse' => $user['adresse'],
+        'date_naissance' => $user['date_naissance'],
+        'telephone' => $user['telephone'],
         'photo' => !empty($user['photo']) ? $user['photo'] : null
     ];
+
+    // Sécuriser les valeurs vides pour éviter les "Undefined index" plus tard
+    foreach (['adresse', 'date_naissance', 'telephone'] as $key) {
+        if (!isset($_SESSION[$key])) {
+            $_SESSION[$key] = null;
+        }
+    }
+
+    // Récupération des rôles de l'utilisateur
+    $stmt = $pdo->prepare("
+        SELECT r.libelle
+        FROM possede p
+        JOIN role r ON r.role_id = p.role_id
+        WHERE p.utilisateur_id = ?
+    ");
+    $stmt->execute([$user['utilisateur_id']]);
+    $roles = $stmt->fetchAll(PDO::FETCH_COLUMN);
+
+    // Stocker les rôles dans la session
+    $_SESSION['role'] = $roles;
 
     echo json_encode([
         'success' => true,

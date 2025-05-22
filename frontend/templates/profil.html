@@ -31,7 +31,7 @@
     <h1>Bienvenue <span id="pseudo"></span> !</h1>
     <p>Vous disposez actuellement de <strong><span id="credit"></span> crédits</strong>.</p>
 
-    <section class="profil-infos">
+    <section class="profil-infos card-trajet">
       <h2>Mes informations</h2>
       <ul>
         <li><strong>Prénom :</strong> <span id="info-prenom"></span></li>
@@ -39,49 +39,76 @@
         <li><strong>Email :</strong> <span id="info-email"></span></li>
         <li><strong>Pseudo :</strong> <span id="info-pseudo"></span></li>
         <li><strong>Crédits :</strong> <span id="info-credit"></span></li>
+        <li><strong>Téléphone :</strong> <span id="info-telephone"></span></li>
+        <li><strong>Adresse :</strong> <span id="info-adresse"></span></li>
+        <li><strong>Date de naissance :</strong> <span id="info-date-naissance"></span></li>
       </ul>
     </section>
-    <section class="profil-role">
+    <section class="profil-role card-trajet">
       <h2>Mon rôle</h2>
       <form id="form-role">
         <label><input type="checkbox" name="role[]" value="1" /> Conducteur</label><br />
         <label><input type="checkbox" name="role[]" value="2" /> Passager</label><br />
       </form>
     </section>
-    <section id="conducteur-fields" style="display: none;">
+    <section id="conducteur-fields" class="card-trajet" style="display: none;">
       <h2>Informations Conducteur</h2>
-      <form id="form-conducteur">
-        <label for="immatriculation">Immatriculation :</label><br />
-        <input type="text" id="immatriculation" name="immatriculation" /><br />
+      <form id="form-conducteur" class="form-style">
+  <div class="form-group">
+    <label for="immatriculation">Immatriculation :</label>
+    <input type="text" id="immatriculation" name="immatriculation" class="input-style" />
+  </div>
 
-        <label for="marque">Marque :</label><br />
-        <input type="text" id="marque" name="marque" /><br />
+  <div class="form-group">
+    <label for="marque">Marque :</label>
+    <input type="text" id="marque" name="marque" class="input-style" />
+  </div>
 
-        <label for="modele">Modèle :</label><br />
-        <input type="text" id="modele" name="modele" /><br />
+  <div class="form-group">
+    <label for="modele">Modèle :</label>
+    <input type="text" id="modele" name="modele" class="input-style" />
+  </div>
 
-        <label for="couleur">Couleur :</label><br />
-        <input type="text" id="couleur" name="couleur" /><br />
+  <div class="form-group">
+    <label for="couleur">Couleur :</label>
+    <input type="text" id="couleur" name="couleur" class="input-style" />
+  </div>
 
-        <label for="energie">Énergie :</label><br />
-        <input type="text" id="energie" name="energie" /><br />
+  <div class="form-group">
+    <label for="energie">Énergie :</label>
+    <input type="text" id="energie" name="energie" class="input-style" />
+  </div>
 
-        <label for="date_immatriculation">Date de première immatriculation :</label><br />
-        <input type="date" id="date_immatriculation" name="date_immatriculation" /><br />
+  <div class="form-group">
+    <label for="date_immatriculation">Date de première immatriculation :</label>
+    <input type="date" id="date_immatriculation" name="date_immatriculation" class="input-style" />
+  </div>
 
-        <label for="places">Nombre de places disponibles :</label><br />
-        <input type="number" id="places" name="places" min="1" max="8" /><br />
+  <div class="form-group">
+    <label for="places">Nombre de places disponibles :</label>
+    <input type="number" id="places" name="places" min="1" max="8" class="input-style" />
+  </div>
 
-        <fieldset>
-          <legend>Préférences :</legend>
-          <label><input type="checkbox" name="preferences[]" value="fumeur" /> Accepte les fumeurs</label><br />
-          <label><input type="checkbox" name="preferences[]" value="animaux" /> Accepte les animaux</label>
-        </fieldset>
-        
-      </form>
+  <div class="form-group">
+    <label>Préférences :</label>
+    <div class="tag-toggle-group">
+      <label id="tag-fumeur" class="tag-toggle tag-off" for="pref_fumeur">
+        🚬
+        <input type="hidden" name="pref_fumeur" value="0">
+        <input type="checkbox" id="pref_fumeur" name="pref_fumeur" value="1" hidden>
+      </label>
+      <label id="tag-animaux" class="tag-toggle tag-off" for="pref_animaux">
+        🐾
+        <input type="hidden" name="pref_animaux" value="0">
+        <input type="checkbox" id="pref_animaux" name="pref_animaux" value="1" hidden>
+      </label>
+    </div>
+  </div>
+</form>
     </section>
   </main>
   
+</main>
   <script type="module" src="../src/js/profil.js" defer></script>
   <script type="module" src="../src/js/script.js" defer></script>
 </body>

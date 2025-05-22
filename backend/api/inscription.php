@@ -22,6 +22,9 @@ try {
     $prenom = trim($data['prenom'] ?? '');
     $email = trim($data['email'] ?? '');
     $password = $data['password'] ?? '';
+    $telephone = trim($data['telephone'] ?? '');
+    $adresse = trim($data['adresse'] ?? '');
+    $date_naissance = trim($data['date_naissance'] ?? '');
 
     file_put_contents("log.txt", json_encode([
       'pseudo' => $pseudo ?? null,
@@ -29,11 +32,14 @@ try {
       'prenom' => $prenom ?? null,
       'email' => $email ?? null,
       'password' => $password ?? null,
+      'telephone' => $telephone ?? null,
+      'adresse' => $adresse ?? null,
+      'date_naissance' => $date_naissance ?? null,
       'pdo' => isset($pdo),
       'mongoDb' => isset($mongoDb)
     ]));
 
-    if (!$pseudo || !$nom || !$prenom || !$email || !$password) {
+    if (!$pseudo || !$nom || !$prenom || !$email || !$password || !$telephone || !$adresse || !$date_naissance) {
         echo json_encode(['success' => false, 'message' => 'Champs manquants.']);
         exit;
     }
@@ -49,8 +55,8 @@ try {
     $hash = password_hash($password, PASSWORD_DEFAULT);
 
     // Insertion SQL dans la table utilisateur
-    $stmt = $pdo->prepare("INSERT INTO utilisateur (pseudo, nom, prenom, email, password, credit) VALUES (?, ?, ?, ?, ?, 20)");
-    $stmt->execute([$pseudo, $nom, $prenom, $email, $hash]);
+    $stmt = $pdo->prepare("INSERT INTO utilisateur (pseudo, nom, prenom, email, password, telephone, adresse, date_naissance, credit) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 20)");
+    $stmt->execute([$pseudo, $nom, $prenom, $email, $hash, $telephone, $adresse, $date_naissance]);
 
     // Récupérer l'ID du dernier utilisateur inséré
     $userId = $pdo->lastInsertId();
@@ -62,6 +68,9 @@ try {
     $_SESSION['nom'] = $nom;
     $_SESSION['prenom'] = $prenom;
     $_SESSION['email'] = $email;
+    $_SESSION['telephone'] = $telephone;
+    $_SESSION['adresse'] = $adresse;
+    $_SESSION['date_naissance'] = $date_naissance;
     $_SESSION['credit'] = 20;
 
     // Insertion MongoDB
@@ -71,6 +80,9 @@ try {
         'nom' => $nom,
         'prenom' => $prenom,
         'email' => $email,
+        'telephone' => $telephone,
+        'adresse' => $adresse,
+        'date_naissance' => $date_naissance,
         'preferences' => new stdClass(),
         'avis' => []
     ]);

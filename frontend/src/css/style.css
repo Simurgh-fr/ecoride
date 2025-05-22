@@ -1,31 +1,5 @@
-#form-photo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 20px;
-}
+/* === Structure générale === */
 
-#form-photo label {
-  font-weight: 600;
-  margin-bottom: 8px;
-}
-
-#form-photo input[type="file"] {
-  margin-bottom: 10px;
-}
-
-#form-photo button {
-  background-color: #4CAF50;
-  color: white;
-  padding: 10px 18px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-#form-photo button:hover {
-  background-color: #388E3C;
-}
 /* Base générale */
 body {
   margin: 0;
@@ -37,6 +11,8 @@ main {
   margin: 0 auto;
   padding: 20px;
 }
+
+/* Layouts et sections génériques */
 
 /* Section Hero */
 #hero {
@@ -124,18 +100,6 @@ main {
   background-color: #388E3C;
 }
 
-/* Animation fade-in (quand tu voudras l'activer via JS plus tard) */
-.fade-in-section {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-}
-
-.fade-in-section.visible {
-  opacity: 1;
-  transform: none;
-}
-
 /* Section Présentation */
 .presentation {
   display: flex;
@@ -170,6 +134,9 @@ main {
   color: #333333;
 }
 
+/* === Composants globaux === */
+
+/* Boutons généraux */
 .btn-cta {
   display: block;
   margin: 20px auto 0;
@@ -189,7 +156,7 @@ main {
   background-color: #388E3C;
 }
 
-/* === Composants Trajets === */
+/* Boutons détails trajet */
 .btn-detail-trajet {
   background-color: #2E8B57;
   color: white;
@@ -205,184 +172,26 @@ main {
   background-color: #246B46;
 }
 
-.card-trajet {
-  background-color: #ffffff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 16px 24px;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-  transition: transform 0.2s ease;
-}
-
-.card-trajet:hover {
-  transform: translateY(-3px);
-}
-
-.card-trajet h3 {
-  margin-top: 0;
-  font-size: 1.25rem;
-  color: #2E8B57;
-}
-
-.card-trajet p {
-  margin: 6px 0;
-  font-size: 1rem;
-  color: #333;
-}
-
-#resultats-trajets {
-  padding: 20px;
-  background-color: #fefefe;
-  border: 2px dashed #4CAF50;
-  border-radius: 10px;
-  margin-top: 40px;
-}
-
-.eco-label {
-  color: #2e7d32;
-  font-weight: bold;
-  font-style: italic;
-  margin-top: 6px;
-  background-color: #e8f5e9;
-  padding: 4px 8px;
-  border-radius: 4px;
-  display: inline-block;
-}
-
-/* === Tag écologique dans les cartes trajets === */
-.eco-label {
-  color: #2e7d32;
-  font-weight: bold;
-  font-style: italic;
-  margin-top: 6px;
-  background-color: #e8f5e9;
-  padding: 4px 8px;
-  border-radius: 4px;
-  display: inline-block;
-}
-
-.photo-chauffeur {
-  width: 64px;
-  height: 64px;
-  max-width: 100%;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-bottom: 12px;
-  border: 2px solid #4CAF50;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* Met en valeur les mots "Départ" et "Arrivée" dans la ligne date/heure des cartes trajets */
-.card-trajet p strong {
-  color: #2E8B57;
-}
-
-/* === Barre de filtres === */
-#barre-filtres {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  justify-content: center;
-  margin-bottom: 20px;
-}
-
-#barre-filtres input[type="number"] {
-  padding: 8px 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 0.95rem;
-  width: 140px;
-}
-
-/* === Tags boutons === */
-.tag-filter,
-.tag-toggle {
-  padding: 8px 14px;
-  border-radius: 20px;
-  font-weight: 600;
-  font-size: 0.95rem;
-  cursor: pointer;
-  border: 2px solid transparent;
-  background-color: #f5f5f5;
-  color: #333;
-  transition: all 0.2s ease;
-}
-
-.tag-filter:hover,
-.tag-toggle:hover {
-  background-color: #e0e0e0;
-}
-
-.tag-filter.selected {
-  background-color: #c8e6c9;
-  color: #1b5e20;
-  border-color: #81c784;
-}
-
-/* === Spécifiques fumeur/animaux === */
-.tag-ok {
-  border: 2px solid #388e3c !important;
-  background-color: #e8f5e9 !important;
-  color: #2e7d32 !important;
-}
-
-.tag-ko {
-  border: 2px solid #e53935 !important;
-  background-color: #ffebee !important;
-  color: #c62828 !important;
-}
-
-.message-suggestion {
-  background-color: #fff3cd;
-  border: 1px solid #ffeeba;
-  color: #856404;
-  padding: 12px 16px;
-  border-radius: 6px;
-  font-size: 1rem;
-  margin-bottom: 16px;
-  text-align: center;
-}
-
-/* Styles pour l’étoile dans le champ "Note min" */
-.note-wrapper {
-  position: relative;
-  display: inline-block;
-}
-
-.note-wrapper input {
-  padding-right: 28px;
-}
-
-.note-star {
-  position: absolute;
-  right: 8px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 1rem;
-  color: #fbc02d;
-  pointer-events: none;
-}
-
-#resultats-trajets:empty {
-  display: none;
-}
-
-
-/* Harmonisation du select de note minimale */
-.note-wrapper select {
+/* Bouton ajout trajet */
+.btn-ajout-trajet {
+  background-color: #4CAF50;
+  color: white;
   padding: 12px;
   font-size: 1rem;
   border-radius: 5px;
-  border: 1px solid #ccc;
-  width: 100%;
-  font-family: inherit;
-  color: #555;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  display: block;
+  margin: 1rem auto;
+  transition: background-color 0.3s ease;
 }
 
-/* === Formulaire d'inscription === */
+.btn-ajout-trajet:hover {
+  background-color: #388E3C;
+}
+
+/* Formulaires généraux */
 form {
   max-width: 400px;
   margin: 0 auto;
@@ -410,7 +219,73 @@ form input[type="password"] {
   font-size: 1rem;
   font-family: inherit;
 }
-/* === Photo profil === */
+
+/* Tags boutons */
+.tag-filter,
+.tag-toggle {
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  border: 2px solid transparent;
+  background-color: #f5f5f5;
+  color: #333;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.tag-filter:hover,
+.tag-toggle:hover {
+  background-color: #e0e0e0;
+}
+
+.tag-filter.selected {
+  background-color: #c8e6c9;
+  color: #1b5e20;
+  border-color: #81c784;
+}
+
+.tag-toggle.selected {
+  background-color: #c8e6c9 !important;
+  border-color: #388e3c !important;
+  color: #1b5e20 !important;
+}
+
+/* Spécifiques fumeur/animaux */
+.tag-ok {
+  border: 2px solid #388e3c !important;
+  background-color: #e8f5e9 !important;
+  color: #2e7d32 !important;  
+}
+
+/* Messages suggestion */
+.message-suggestion {
+  background-color: #fff3cd;
+  border: 1px solid #ffeeba;
+  color: #856404;
+  padding: 12px 16px;
+  border-radius: 6px;
+  font-size: 1rem;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+/* Inputs spécifiques */
+#barre-filtres input[type="number"] {
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  width: 140px;
+}
+
+/* === Composants spécifiques === */
+
+/* Photo profil */
 .photo-container {
   display: flex;
   justify-content: center;
@@ -435,6 +310,7 @@ form input[type="password"] {
   font-weight: 600;
 }
 
+/* Popup photo */
 .popup-photo {
   position: fixed;
   top: 0;
@@ -503,4 +379,266 @@ form input[type="password"] {
 
 .close-popup:hover {
   color: #333;
+}
+
+/* Cartes trajets */
+.card-trajet {
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 16px 24px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease;
+}
+
+.card-trajet:hover {
+  transform: translateY(-3px);
+}
+
+.card-trajet h3 {
+  margin-top: 0;
+  font-size: 1.25rem;
+  color: #2E8B57;
+}
+
+.card-trajet p {
+  margin: 6px 0;
+  font-size: 1rem;
+  color: #333;
+}
+
+/* Met en valeur les mots "Départ" et "Arrivée" dans la ligne date/heure des cartes trajets */
+.card-trajet p strong {
+  color: #2E8B57;
+}
+
+/* Résultats trajets */
+#resultats-trajets {
+  padding: 20px;
+  background-color: #fefefe;
+  border: 2px dashed #4CAF50;
+  border-radius: 10px;
+  margin-top: 40px;
+}
+
+#resultats-trajets:empty {
+  display: none;
+}
+
+/* Éco-label */
+.eco-label {
+  color: #2e7d32;
+  font-weight: bold;
+  font-style: italic;
+  margin-top: 6px;
+  background-color: #e8f5e9;
+  padding: 4px 8px;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+/* Photo chauffeur */
+.photo-chauffeur {
+  width: 64px;
+  height: 64px;
+  max-width: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 12px;
+  border: 2px solid #4CAF50;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Barre de filtres */
+#barre-filtres {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+/* Formulaire photo */
+#form-photo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+#form-photo label {
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+#form-photo input[type="file"] {
+  margin-bottom: 10px;
+}
+
+#form-photo button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#form-photo button:hover {
+  background-color: #388E3C;
+}
+
+/* === Pages spécifiques === */
+
+/* Formulaire d'inscription */
+form {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #333;
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="password"] {
+  width: 100%;
+  padding: 12px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  font-family: inherit;
+}
+
+/* Formulaire Création Trajet */
+form#create-trajet-form {
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin: 40px auto;
+  max-width: 500px;
+}
+
+form#create-trajet-form h1 {
+  text-align: center;
+  font-size: 2rem;
+  color: #4CAF50;
+  margin-bottom: 20px;
+}
+
+form#create-trajet-form label {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 6px;
+  color: #333;
+}
+
+form#create-trajet-form input,
+form#create-trajet-form select {
+  padding: 12px;
+  font-size: 1rem;
+  margin-bottom: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  width: 100%;
+  font-family: inherit;
+}
+
+form#create-trajet-form a {
+  color: #4CAF50;
+  font-weight: 600;
+  font-size: 0.95rem;
+  display: inline-block;
+  margin-top: -10px;
+  margin-bottom: 12px;
+  text-decoration: none;
+}
+
+form#create-trajet-form a:hover {
+  text-decoration: underline;
+}
+
+form#create-trajet-form p {
+  background-color: #fff3cd;
+  border: 1px solid #ffeeba;
+  color: #856404;
+  padding: 12px 16px;
+  border-radius: 6px;
+  font-size: 1rem;
+  margin-bottom: 16px;
+}
+
+form#create-trajet-form button[type="submit"] {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 5px;
+  width: 100%;
+  transition: background-color 0.3s ease;
+}
+
+form#create-trajet-form button[type="submit"]:hover {
+  background-color: #388E3C;
+}
+
+/* === Utilitaires === */
+
+/* Animation fade-in (quand tu voudras l'activer via JS plus tard) */
+.fade-in-section {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.fade-in-section.visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Styles pour l’étoile dans le champ "Note min" */
+.note-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.note-wrapper input {
+  padding-right: 28px;
+}
+
+.note-star {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1rem;
+  color: #fbc02d;
+  pointer-events: none;
+}
+
+/* Harmonisation du select de note minimale */
+.note-wrapper select {
+  padding: 12px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  width: 100%;
+  font-family: inherit;
+  color: #555;
 }

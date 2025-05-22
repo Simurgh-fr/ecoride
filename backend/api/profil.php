@@ -17,6 +17,9 @@ $response = [
   'prenom' => $_SESSION['prenom'],
   'email' => $_SESSION['email'],
   'photo' => $_SESSION['photo'],
+  'adresse' => $_SESSION['adresse'],
+  'date_naissance' => $_SESSION['date_naissance'],
+  'telephone' => $_SESSION['telephone'],
 ];
 
 echo json_encode($response);

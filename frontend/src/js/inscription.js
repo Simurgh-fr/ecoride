@@ -9,9 +9,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const prenom = document.getElementById("prenom").value.trim();
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value;
+    const telephone = document.getElementById("telephone").value.trim();
+    const adresse = document.getElementById("adresse").value.trim();
+    const date_naissance = document.getElementById("date_naissance").value.trim();
 
     // Validation simple
-    if (!pseudo || !nom || !prenom || !email || !password) {
+    if (!pseudo || !nom || !prenom || !email || !password || !telephone || !adresse || !date_naissance) {
       alert("Tous les champs sont obligatoires.");
       return;
     }
@@ -33,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const response = await fetch("/api/inscription.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ pseudo, nom, prenom, email, password }),
+        body: JSON.stringify({ pseudo, nom, prenom, email, password, telephone, adresse, date_naissance }),
       });
 
       const data = await response.json();
@@ -47,6 +50,9 @@ document.addEventListener("DOMContentLoaded", () => {
         sessionStorage.setItem("prenom", data.prenom);
         sessionStorage.setItem("email", data.email);
         sessionStorage.setItem("credit", data.credit);
+        sessionStorage.setItem("telephone", data.telephone);
+        sessionStorage.setItem("adresse", data.adresse);
+        sessionStorage.setItem("date_naissance", data.date_naissance);
         window.location.replace("profil.php");
       } else {
         alert(data.message || "Erreur lors de la création du compte.");

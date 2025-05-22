@@ -194,6 +194,29 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `préférences utilisateur`
+--
+
+DROP TABLE IF EXISTS `preference_utilisateur`;
+CREATE TABLE IF NOT EXISTS `preference_utilisateur` (
+      `utilisateur_id` INT PRIMARY KEY,
+  `immatriculation` VARCHAR(20),
+  `marque` VARCHAR(50),
+  `modele` VARCHAR(50),
+  `couleur` VARCHAR(30),
+  `energie` VARCHAR(30),
+  `date_premiere_immatriculation` DATE DEFAULT NULL,
+  `nb_places` INT,
+  `fumeur` BOOLEAN,
+  `animaux` BOOLEAN,
+  FOREIGN KEY (`utilisateur_id`) REFERENCES `utilisateur`(`utilisateur_id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+);
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `utilise`
 --
 
@@ -267,6 +290,7 @@ ALTER TABLE `possede`
 ALTER TABLE `utilise`
   ADD CONSTRAINT `utilise_ibfk_1` FOREIGN KEY (`covoiturage_id`) REFERENCES `covoiturage` (`covoiturage_id`) ON DELETE CASCADE,
   ADD CONSTRAINT `utilise_ibfk_2` FOREIGN KEY (`voiture_id`) REFERENCES `voiture` (`voiture_id`) ON DELETE CASCADE;
+
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

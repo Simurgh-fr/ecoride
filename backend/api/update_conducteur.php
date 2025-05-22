@@ -77,31 +77,32 @@ try {
         }
     }
 
-    // Préférences covoiturage
+    // Préférences utilisateur complètes
+    $immatriculation = $data['immatriculation'] ?? '';
+    $marque = $data['marque'] ?? '';
+    $modele = $data['modele'] ?? '';
+    $couleur = $data['couleur'] ?? '';
+    $energie = $data['energie'] ?? '';
+    $date_immatriculation = $data['date_immatriculation'] ?? null;
     $places = isset($data['places']) && is_numeric($data['places']) ? intval($data['places']) : 0;
-    $fumeur = in_array('fumeur', $data['preferences'] ?? []) ? 1 : 0;
-    $animaux = in_array('animaux', $data['preferences'] ?? []) ? 1 : 0;
+    $fumeur = isset($data['pref_fumeur']) && $data['pref_fumeur'] == "1" ? 1 : 0;
+    $animaux = isset($data['pref_animaux']) && $data['pref_animaux'] == "1" ? 1 : 0;
 
-    // Récupérer ou créer un covoiturage pour cette voiture
-    $stmt = $pdo->prepare("SELECT c.covoiturage_id FROM covoiturage c
-                           INNER JOIN utilise u ON u.covoiturage_id = c.covoiturage_id
-                           WHERE u.voiture_id = ? LIMIT 1");
-    $stmt->execute([$voiture_id]);
-    $covoiturage_id = $stmt->fetchColumn();
+        // Vérifie si des préférences existent déjà
+    $stmt = $pdo->prepare("SELECT COUNT(*) FROM preference_utilisateur WHERE utilisateur_id = ?");
+    $stmt->execute([$utilisateur_id]);
+    $exists = $stmt->fetchColumn();
 
-    if ($covoiturage_id) {
-        $stmt = $pdo->prepare("UPDATE covoiturage 
-                               SET nb_places = ?, fumeur = ?, animaux = ?
-                               WHERE covoiturage_id = ?");
-        $stmt->execute([$places, $fumeur, $animaux, $covoiturage_id]);
-    }
-
-    if (!$covoiturage_id) {
-        $stmt = $pdo->prepare("INSERT INTO covoiturage (nb_places, fumeur, animaux) VALUES (?, ?, ?)");
-        $stmt->execute([$places, $fumeur, $animaux]);
-        $covoiturage_id = $pdo->lastInsertId();
-        $stmt = $pdo->prepare("INSERT INTO utilise (voiture_id, covoiturage_id) VALUES (?, ?)");
-        $stmt->execute([$voiture_id, $covoiturage_id]);
+    if ($exists) {
+                $stmt = $pdo->prepare("UPDATE preference_utilisateur 
+            SET immatriculation = ?, marque = ?, modele = ?, couleur = ?, energie = ?, date_premiere_immatriculation = ?, nb_places = ?, fumeur = ?, animaux = ?
+            WHERE utilisateur_id = ?");
+        $stmt->execute([$immatriculation, $marque, $modele, $couleur, $energie, $date_immatriculation, $places, $fumeur, $animaux, $utilisateur_id]);
+    } else {
+               $stmt = $pdo->prepare("INSERT INTO preference_utilisateur 
+            (utilisateur_id, immatriculation, marque, modele, couleur, energie, date_premiere_immatriculation, nb_places, fumeur, animaux)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->execute([$utilisateur_id, $immatriculation, $marque, $modele, $couleur, $energie, $date_immatriculation, $places, $fumeur, $animaux]);
     }
 
     echo json_encode(['success' => true]);

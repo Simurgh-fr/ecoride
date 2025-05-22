@@ -97,20 +97,29 @@ window.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Écouteurs de clic pour les trois boutons de filtre visibles dans le HTML
-  document.querySelectorAll('#filtre-ecologique, #filtre-fumeur, #filtre-animaux').forEach(btn => {
-    btn.addEventListener('click', () => {
-      btn.classList.toggle('selected');
+  // Gestion des tags de filtre façon ajout-trajet.php
+  const tagFumeur = document.getElementById("filtre-fumeur");
+  const tagAnimaux = document.getElementById("filtre-animaux");
+  const tagEco = document.getElementById("filtre-ecologique");
 
-      if (btn.classList.contains('tag-ok')) {
-        btn.classList.remove('tag-ok');
-        btn.classList.add('tag-ko');
-      } else {
-        btn.classList.remove('tag-ko');
-        btn.classList.add('tag-ok');
-      }
-    });
-  });
+  const inputFumeur = document.getElementById("input_fumeur");
+  const inputAnimaux = document.getElementById("input_animaux");
+  const inputEco = document.getElementById("input_ecologique");
+
+  const toggleTag = (tag, input) => {
+    input.checked = !input.checked;
+    if (input.checked) {
+      tag.classList.remove("tag-off");
+      tag.classList.add("tag-on", "selected");
+    } else {
+      tag.classList.remove("tag-on", "selected");
+      tag.classList.add("tag-off");
+    }
+  };
+
+  if (tagFumeur && inputFumeur) tagFumeur.addEventListener("click", () => toggleTag(tagFumeur, inputFumeur));
+  if (tagAnimaux && inputAnimaux) tagAnimaux.addEventListener("click", () => toggleTag(tagAnimaux, inputAnimaux));
+  if (tagEco && inputEco) tagEco.addEventListener("click", () => toggleTag(tagEco, inputEco));
 
   function formaterDate(dateStr, heureStr) {
     if (!dateStr || !heureStr) return 'Date non précisée';
@@ -182,8 +191,8 @@ window.addEventListener('DOMContentLoaded', () => {
         <p><strong>Prix :</strong> ${trajet.prix} €</p>
         <p><strong>Places restantes :</strong> ${trajet.nb_places_disponibles}</p>
         ${(trajet.est_ecologique == 1 || trajet.type_voiture?.toLowerCase() === 'électrique') ? '<p class="eco-label">🌿 Voyage écologique</p>' : ''}
-        ${trajet.fumeur === 1 ? '<p class="tag-option tag-ok">🚬 Fumeur accepté</p>' : '<p class="tag-option tag-ko">🚫 Fumeur refusé</p>'}
-        ${trajet.animaux === 1 ? '<p class="tag-option tag-ok">🐾 Animaux acceptés</p>' : '<p class="tag-option tag-ko">🚫 Animaux refusés</p>'}
+        ${trajet.fumeur === 1 ? '<p class="tag-option tag-ok">🚬 Fumeur accepté</p>' : '<p class="tag-option">🚫 Fumeur refusé</p>'}
+        ${trajet.animaux === 1 ? '<p class="tag-option tag-ok">🐾 Animaux acceptés</p>' : '<p class="tag-option">🚫 Animaux refusés</p>'}
         <button class="btn-voir-avis" data-utilisateur-id="${trajet.utilisateur_id}">Voir avis</button>
       `;
       conteneur.appendChild(trajetDiv);

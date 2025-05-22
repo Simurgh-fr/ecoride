@@ -25,6 +25,9 @@ document.addEventListener("DOMContentLoaded", () => {
       sessionStorage.setItem("prenom", data.prenom);
       sessionStorage.setItem("email", data.email);
       sessionStorage.setItem("credit", data.credit);
+      sessionStorage.setItem("telephone", data.telephone);
+      sessionStorage.setItem("adresse", data.adresse);
+      sessionStorage.setItem("date_naissance", data.date_naissance);
       localStorage.setItem("isAuthenticated", "true");
 
       document.getElementById("pseudo").textContent = data.pseudo;
@@ -34,6 +37,24 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("info-nom").textContent = data.nom;
       document.getElementById("info-email").textContent = data.email;
       document.getElementById("info-credit").textContent = data.credit;
+      // Ajout : champs téléphone, adresse, date de naissance (affichage "Non renseigné(e)" si vide)
+      const telephoneElem = document.getElementById("info-telephone");
+      if (telephoneElem) {
+        telephoneElem.textContent = data.telephone || "Non renseigné";
+      }
+      const adresseElem = document.getElementById("info-adresse");
+      if (adresseElem) {
+        adresseElem.textContent = data.adresse || "Non renseignée";
+      }
+      const dateNaissanceElem = document.getElementById("info-date-naissance");
+      if (dateNaissanceElem) {
+        dateNaissanceElem.textContent = data.date_naissance || "Non renseignée";
+      }
+
+      // (Ancien code : laissait potentiellement undefined)
+      // document.getElementById("info-telephone").textContent = data.telephone;
+      // document.getElementById("info-adresse").textContent = data.adresse;
+      // document.getElementById("info-date-naissance").textContent = data.date_naissance;
 
       if (data.photo) {
         document.getElementById("photo-profil").src = data.photo;
@@ -63,8 +84,35 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (d.date_premiere_immatriculation) document.getElementById("date_immatriculation").value = d.date_premiere_immatriculation;
                 if (d.marque) document.getElementById("marque").value = d.marque;
                 if (d.nb_places) document.getElementById("places").value = d.nb_places;
-                if (d.fumeur == 1) document.querySelector("input[value='fumeur']").checked = true;
-                if (d.animaux == 1) document.querySelector("input[value='animaux']").checked = true;
+
+                // Synchronisation des préférences fumeur et animaux avec les tags CSS
+                const inputFumeur = document.getElementById("pref_fumeur");
+                const inputAnimaux = document.getElementById("pref_animaux");
+                const tagFumeur = document.getElementById("tag-fumeur");
+                const tagAnimaux = document.getElementById("tag-animaux");
+
+                if (inputFumeur && tagFumeur) {
+                  if (d.fumeur == 1) {
+                    inputFumeur.checked = true;
+                    tagFumeur.classList.add("tag-on", "selected");
+                    tagFumeur.classList.remove("tag-off");
+                  } else {
+                    inputFumeur.checked = false;
+                    tagFumeur.classList.add("tag-off");
+                    tagFumeur.classList.remove("tag-on", "selected");
+                  }
+                }
+                if (inputAnimaux && tagAnimaux) {
+                  if (d.animaux == 1) {
+                    inputAnimaux.checked = true;
+                    tagAnimaux.classList.add("tag-on", "selected");
+                    tagAnimaux.classList.remove("tag-off");
+                  } else {
+                    inputAnimaux.checked = false;
+                    tagAnimaux.classList.add("tag-off");
+                    tagAnimaux.classList.remove("tag-on", "selected");
+                  }
+                }
               }
             })
             .catch(err => console.error("Erreur chargement infos conducteur :", err));
@@ -123,6 +171,62 @@ document.addEventListener("DOMContentLoaded", () => {
           });
       });
     });
+
+    // Ajout des écouteurs de clic pour tag-fumeur et tag-animaux
+    const tagFumeur = document.getElementById("tag-fumeur");
+    const tagAnimaux = document.getElementById("tag-animaux");
+    const inputFumeur = document.getElementById("pref_fumeur");
+    const inputAnimaux = document.getElementById("pref_animaux");
+
+    // Fonction pour appliquer la classe visuelle au clic
+    const toggleTag = (tag, input) => {
+      input.checked = !input.checked;
+      tag.classList.toggle("tag-on", input.checked);
+      tag.classList.toggle("tag-off", !input.checked);
+      tag.classList.toggle("selected", input.checked);
+    };
+
+    if (tagFumeur && tagAnimaux && inputFumeur && inputAnimaux) {
+      tagFumeur.addEventListener("click", () => {
+        toggleTag(tagFumeur, inputFumeur);
+        setTimeout(() => {
+          const formData = new FormData(formConducteur);
+          fetch("/api/update_conducteur.php", {
+            method: "POST",
+            body: formData
+          })
+            .then(res => res.json())
+            .then(result => {
+              if (!result.success) {
+                console.error("Erreur mise à jour conducteur (fumeur) :", result.message);
+              }
+            })
+            .catch(err => {
+              console.error("Erreur requête update_conducteur.php :", err);
+            });
+        }, 50);
+      });
+
+      tagAnimaux.addEventListener("click", () => {
+        toggleTag(tagAnimaux, inputAnimaux);
+        setTimeout(() => {
+          const formData = new FormData(formConducteur);
+          fetch("/api/update_conducteur.php", {
+            method: "POST",
+            body: formData
+          })
+            .then(res => res.json())
+            .then(result => {
+              if (!result.success) {
+                console.error("Erreur mise à jour conducteur (animaux) :", result.message);
+              }
+            })
+            .catch(err => {
+              console.error("Erreur requête update_conducteur.php :", err);
+            });
+        }, 50);
+      });
+    }
   }
     })
     .catch(error => {

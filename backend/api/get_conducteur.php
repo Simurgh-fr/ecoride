@@ -36,11 +36,9 @@ try {
     $stmt->execute([$voiture_id]);
     $voiture['marque'] = $stmt->fetchColumn();
 
-    // Récupérer les infos covoiturage
-    $stmt = $pdo->prepare("SELECT c.nb_places, c.fumeur, c.animaux FROM covoiturage c
-                           INNER JOIN utilise u ON u.covoiturage_id = c.covoiturage_id
-                           WHERE u.voiture_id = ?");
-    $stmt->execute([$voiture_id]);
+    // Récupérer les préférences utilisateur
+    $stmt = $pdo->prepare("SELECT nb_places, fumeur, animaux FROM preference_utilisateur WHERE utilisateur_id = ?");
+    $stmt->execute([$utilisateur_id]);
     $covoit = $stmt->fetch(PDO::FETCH_ASSOC);
 
     $data = array_merge($voiture, $covoit ?: []);
