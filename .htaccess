@@ -1,7 +1,9 @@
 RewriteEngine On
 
-# ❗ Ne pas réécrire les appels à l'API
-RewriteCond %{REQUEST_URI} !^/api/
+# ❗ Ne pas réécrire les appels à l’API ni les fichiers PHP
+RewriteCond %{REQUEST_URI} ^/api/ [OR]
+RewriteCond %{REQUEST_URI} \.php$
+RewriteRule ^ - [L]
 
 # ❗ Ne pas réécrire les fichiers et dossiers existants
 RewriteCond %{REQUEST_FILENAME} !-f
