@@ -1,5 +1,11 @@
 RewriteEngine On
 
+# ❗ Ne pas réécrire les appels à l'API
+RewriteCond %{REQUEST_URI} !^/api/
+
+# ❗ Ne pas réécrire les fichiers et dossiers existants
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
+
+# 🔁 Rediriger tout le reste vers frontend/public
 RewriteRule ^(.*)$ frontend/public/$1 [QSA,L]
