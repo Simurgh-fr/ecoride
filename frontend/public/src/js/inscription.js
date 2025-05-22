@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log("Formulaire soumis");
 
     try {
-      const response = await fetch("/api/inscription.php", {
+      const response = await fetch("/backend/api/inscription.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ pseudo, nom, prenom, email, password, telephone, adresse, date_naissance }),
