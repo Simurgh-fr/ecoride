@@ -1,5 +1,8 @@
 <?php
 header('Content-Type: application/json');
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 // Désactivation MongoDB si non nécessaire pour ce script
 define('MONGO_DISABLED', true);
@@ -40,7 +43,6 @@ try {
 
     error_log("✅ Authentification réussie pour : " . $user['email']);
 
-    session_start();
     $_SESSION = [
         'utilisateur_id' => $user['utilisateur_id'],
         'pseudo' => $user['pseudo'],
