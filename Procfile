@@ -1,1 +1,1 @@
-web: heroku-php-apache2 .
+web: bash heroku-postbuild.sh && heroku-php-apache2 .
