@@ -80,6 +80,7 @@ INSERT INTO utilisateur (nom, prenom, email, password, telephone, adresse, date_
 INSERT INTO utilisateur (nom, prenom, email, password, telephone, adresse, date_naissance, photo, pseudo, credit) VALUES('Blanc', 'Laura', 'laura.blanc@example.com', 'laura2829', '0677665544', '27 boulevard Voltaire, Lille', '1996-06-06', NULL, 'lblanc', 20);
 INSERT INTO utilisateur (nom, prenom, email, password, telephone, adresse, date_naissance, photo, pseudo, credit) VALUES('Fontaine', 'David', 'david.fontaine@example.com', 'david3031', '0666554433', '29 rue de la Paix, Bordeaux', '1983-03-03', NULL, 'dfontaine', 20);
 
+
 --
 -- Déchargement des données de la table preference_utilisateur
 --

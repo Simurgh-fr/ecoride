@@ -4,13 +4,19 @@ require_once '/srv/dev/Studi/ECF/ecoride/vendor/autoload.php'; // Assure que Com
 
 use MongoDB\Client;
 
+$mongoUri = getenv('MONGO_URI');
+
+if (!$mongoUri) {
+    // Pas de MongoDB disponible (ex : Heroku), on renvoie null
+    return null;
+}
+
 try {
-    $mongoClient = new Client(MONGO_URI);
+    $mongoClient = new Client($mongoUri);
     $mongoDb = $mongoClient->selectDatabase('ecoride_nosql');
     $collectionAvis = $mongoDb->avis;
     return $collectionAvis;
 } catch (Exception $e) {
-    http_response_code(500);
-    echo json_encode(['error' => 'Erreur de connexion à MongoDB : ' . $e->getMessage()]);
-    exit;
+    // Silencieusement désactiver en prod, ou logguer si besoin
+    return null;
 }
