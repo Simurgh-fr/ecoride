@@ -1,4 +1,5 @@
 <?php
+define('MONGO_DISABLED', true);
 header('Content-Type: application/json');
 
 $__log_start = error_log("🚩 Début du script trajets.php");

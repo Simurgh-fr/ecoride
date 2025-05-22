@@ -1,4 +1,5 @@
 <?php
+define('MONGO_DISABLED', true);
 require_once '../config/session.php';
 
 header('Content-Type: application/json');

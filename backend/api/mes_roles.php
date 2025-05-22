@@ -1,4 +1,5 @@
 <?php
+define('MONGO_DISABLED', true);
 require_once '../config/session.php';
 require_once '../config/connexion.php';
 

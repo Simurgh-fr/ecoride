@@ -1,4 +1,5 @@
 <?php
+define('MONGO_DISABLED', true);
 session_start();
 session_unset();
 session_destroy();

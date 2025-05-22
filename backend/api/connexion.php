@@ -1,6 +1,9 @@
 <?php
 header('Content-Type: application/json');
 
+// Désactivation MongoDB si non nécessaire pour ce script
+define('MONGO_DISABLED', true);
+
 $__log_start = error_log("🚩 Début du script connexion.php");
 // Connexion SQL
 require_once '../config/connexion.php';
