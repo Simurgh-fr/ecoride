@@ -5,7 +5,7 @@ export function createHeader() {
   header.innerHTML = `
     <div class="navbar">
       <div class="logo">
-        <img src="../src/assets/images/Logo.svg" alt="EcoRide Logo">
+        <img src="src/assets/images/Logo.svg" alt="EcoRide Logo">
         <span>EcoRide</span>
       </div>
       <nav class="desktop-menu">

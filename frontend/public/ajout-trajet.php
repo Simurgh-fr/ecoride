@@ -49,7 +49,7 @@ if ($utilisateur_id) {
 <head>
     <meta charset="UTF-8">
     <title>Créer un trajet</title>
-    <link rel="stylesheet" href="/src/css/style.css">
+    <link rel="stylesheet" href="src/css/style.css">
 </head>
 <body>
     <main>
