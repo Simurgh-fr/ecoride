@@ -1,10 +1,11 @@
 <?php
+require_once __DIR__ . '/config.php';
 require_once '/srv/dev/Studi/ECF/ecoride/vendor/autoload.php'; // Assure que Composer est bien chargé
 
 use MongoDB\Client;
 
 try {
-    $mongoClient = new Client('mongodb://192.168.1.112:27017');
+    $mongoClient = new Client(MONGO_URI);
     $mongoDb = $mongoClient->selectDatabase('ecoride_nosql');
     $collectionAvis = $mongoDb->avis;
     return $collectionAvis;
