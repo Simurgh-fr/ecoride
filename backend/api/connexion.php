@@ -12,6 +12,7 @@ $__log_start = error_log("🚩 Début du script connexion.php");
 require_once '../config/connexion.php';
 
 try {
+    error_log("🚀 connexion.php : Entrée dans le bloc try");
     $data = json_decode(file_get_contents("php://input"), true);
 
     $email = trim($data['email'] ?? '');
@@ -80,6 +81,8 @@ try {
         'success' => true,
         'session' => $_SESSION
     ]);
+    error_log("✅ connexion.php : Fin du bloc try");
 } catch (Exception $e) {
+    error_log("🔥 Exception attrapée dans connexion.php : " . $e->getMessage());
     echo json_encode(['success' => false, 'message' => 'Erreur serveur : ' . $e->getMessage()]);
 }
