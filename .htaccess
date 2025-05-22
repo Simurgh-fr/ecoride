@@ -1,0 +1,4 @@
+DirectoryIndex frontend/public/index.html
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ frontend/public/$1 [L]
