@@ -194,6 +194,42 @@ server {
 - `feature/*` : une branche par fonctionnalité
 - Processus : merge `feature` → `develop`, puis `develop` → `main`
 
+## 🚀 Déploiement sur Heroku
+
+### Préparation
+
+1. Créer un compte ou se connecter sur [Heroku](https://heroku.com)
+2. Créer une nouvelle application (par exemple `ecoride-app`)
+3. Connecter votre dépôt GitHub (`Simurgh-fr/ecoride`) à l’application Heroku
+4. Activer le déploiement automatique sur la branche `main`
+
+### Configuration
+
+1. Définir les variables d’environnement dans Heroku :
+   - `DB_HOST`, `DB_NAME`, `DB_USER`, `DB_PASSWORD` pour MariaDB
+   - `MONGO_URI` pour MongoDB (si utilisé)
+2. Ajouter les buildpacks nécessaires :
+   - `heroku/php` (pour PHP)
+   - `heroku/nodejs` (si Mongo Express ou outils Node nécessaires)
+
+### Base de données
+
+- Ajouter un add-on Heroku (ClearDB MySQL ou ElephantSQL selon besoin)
+- Ou connecter une base MariaDB/MongoDB externe (ex: sur serveur `simurghserver`)
+
+### Déploiement
+
+- Chaque `git push` sur la branche `main` déclenchera un déploiement
+- Vérifier les logs si besoin avec :
+  ```bash
+  heroku logs --tail --app nom-de-l-app
+  ```
+
+### Accès
+
+- Frontend : `https://nom-de-l-app.herokuapp.com`
+- API / Mongo Express (si exposé) : `https://mongo.nom-de-l-app.herokuapp.com`
+
 ## 🚀 Guide de déploiement local
 
 ### Prérequis
@@ -223,9 +259,14 @@ server {
    - Adapter les paramètres de connexion à MariaDB et MongoDB
 
 3. **Créer les bases de données**
-   - Importer les fichiers SQL depuis le dossier `/database` dans phpMyAdmin ou via terminal :
+   - Ouvrir phpMyAdmin ou se connecter via terminal à MariaDB
+   - Exécuter d'abord le script de structure :
      ```bash
-     mysql -u root -p < database/schema.sql
+     mysql -u root -p < backend/models/ecoride_db.sql
+     ```
+   - Puis injecter les données d'exemple :
+     ```bash
+     mysql -u root -p < backend/models/jeu_de_donnees.sql
      ```
 
 4. **Configurer Apache ou NGINX**
